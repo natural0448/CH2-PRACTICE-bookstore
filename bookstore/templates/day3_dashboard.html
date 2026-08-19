@@ -366,6 +366,24 @@
       font-size: 12px;
       font-weight: 900;
     }
+    
+    .state-paid {
+      color: #1d4ed8;
+      background: #dbeafe;
+      border: 1px solid #93c5fd;
+    }
+
+    .state-shipping {
+      color: #c2410c;
+      background: #ffedd5;
+      border: 1px solid #fdba74;
+    }
+
+    .state-done {
+      color: #047857;
+      background: #d1fae5;
+      border: 1px solid #6ee7b7;
+    }
 
     .reason {
       color: var(--red);
@@ -444,7 +462,7 @@
       </div>
 
       <div class="eyebrow">Data Quality &amp; Cleansing</div>
-      <h1>결제 데이터 품질 관리 현황 대시보드</h1>
+      <h1>결제 데이터 품질 관리 현황</h1>
       <p class="hero-description">
         레거시 주문 데이터의 정제 결과와 격리 현황을 확인하고,
         정상 데이터와 오류 데이터를 한눈에 비교합니다.
@@ -538,7 +556,11 @@
                 <td>{{ forloop.counter }}</td>
                 <td><code>{{ row.order_id }}</code></td>
                 <td><code>{{ row.book_id }}</code></td>
-                <td><span class="state-chip">{{ row.order_status_code }}</span></td>
+                <td>
+                  <span class="state-chip state-{{ row.order_status_code|lower }}">
+                    {{ row.order_status_code }}
+                  </span>
+                </td>
                 <td>{{ row.quantity }}</td>
                 <td>{{ row.unit_price }}원</td>
               </tr>

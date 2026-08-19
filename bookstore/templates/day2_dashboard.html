@@ -66,13 +66,51 @@
           #172554 50%,
           #1d4ed8 100%
         );
-      padding: 64px 24px 110px;
+      padding: 32px 24px 108px;
     }
 
     .hero-inner,
     .container {
       width: min(1180px, 100%);
       margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 42px;
+    }
+
+    .brand {
+      color: #bfdbfe;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav a {
+      padding: 7px 12px;
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .nav a:hover,
+    .nav a[aria-current="page"] {
+      color: white;
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.42);
     }
 
     .eyebrow {
@@ -430,7 +468,13 @@
 
     @media (max-width: 560px) {
       .hero {
-        padding: 46px 18px 92px;
+        padding: 24px 18px 92px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 34px;
       }
 
       .container {
@@ -463,16 +507,23 @@
 <body>
   <header class="hero">
     <div class="hero-inner">
-      <div class="eyebrow">Bookstore Data Standard</div>
+      <div class="topbar">
+        <div class="brand">Bookstore Data Standard</div>
+        <nav class="nav" aria-label="대시보드 이동">
+          <a href="/bookstore/day2/" aria-current="page">Day 2</a>
+          <a href="/bookstore/day3/">Day 3</a>
+        </nav>
+      </div>
 
+      <div class="eyebrow">Data Quality &amp; Cleansing</div>
       <h1>데이터 표준화 현황 대시보드</h1>
-
       <p class="hero-description">
         레거시 컬럼을 표준 단어, 표준 용어 및 데이터 도메인으로
         변환한 결과와 검증 상태를 한눈에 확인합니다.
       </p>
     </div>
   </header>
+
 
   <main class="container">
     <section class="metrics" aria-label="핵심 지표">

@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Day 2 데이터 표준 대시보드</title>
+
+  <style>
+    :root {
+      --navy: #0f172a;
+      --navy-light: #1e293b;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --green: #059669;
+      --green-soft: #ecfdf5;
+      --red: #dc2626;
+      --red-soft: #fef2f2;
+      --purple: #7c3aed;
+      --purple-soft: #f5f3ff;
+      --orange: #ea580c;
+      --orange-soft: #fff7ed;
+      --surface: #ffffff;
+      --background: #f1f5f9;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(37, 99, 235, 0.12),
+          transparent 28rem
+        ),
+        var(--background);
+      font-family:
+        Pretendard,
+        "Noto Sans KR",
+        "Apple SD Gothic Neo",
+        Arial,
+        sans-serif;
+      line-height: 1.6;
+    }
+
+    .hero {
+      color: white;
+      background:
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(96, 165, 250, 0.35),
+          transparent 22rem
+        ),
+        linear-gradient(
+          135deg,
+          #0f172a 0%,
+          #172554 50%,
+          #1d4ed8 100%
+        );
+      padding: 64px 24px 110px;
+    }
+
+    .hero-inner,
+    .container {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: #bfdbfe;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 9px;
+      height: 9px;
+      content: "";
+      background: #60a5fa;
+      border-radius: 999px;
+      box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.2);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-description {
+      max-width: 690px;
+      margin: 18px 0 0;
+      color: #cbd5e1;
+      font-size: 17px;
+    }
+
+    .container {
+      position: relative;
+      margin-top: -64px;
+      padding: 0 24px 70px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .metric-card {
+      position: relative;
+      overflow: hidden;
+      padding: 22px;
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .metric-card::after {
+      position: absolute;
+      top: -28px;
+      right: -28px;
+      width: 90px;
+      height: 90px;
+      content: "";
+      background: var(--card-accent, var(--blue-soft));
+      border-radius: 999px;
+    }
+
+    .metric-label {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .metric-value {
+      position: relative;
+      z-index: 1;
+      margin-top: 8px;
+      font-size: 31px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 13px;
+      font-size: 14px;
+      font-weight: 900;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .status-badge::before {
+      width: 8px;
+      height: 8px;
+      content: "";
+      background: currentColor;
+      border-radius: 999px;
+    }
+
+    .status-ready {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .status-blocked {
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .section {
+      margin-top: 24px;
+      padding: 30px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .section-description {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section-count {
+      flex: 0 0 auto;
+      padding: 6px 11px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .lineage {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 2px 12px;
+    }
+
+    .lineage-step {
+      flex: 1 0 150px;
+      min-width: 0;
+      padding: 17px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .lineage-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .lineage-value {
+      margin-top: 5px;
+      overflow-wrap: anywhere;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .lineage-arrow {
+      display: grid;
+      place-items: center;
+      flex: 0 0 24px;
+      color: #94a3b8;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    code {
+      padding: 3px 7px;
+      color: #1d4ed8;
+      background: #eff6ff;
+      border-radius: 7px;
+      font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+      font-size: 0.9em;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 960px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      color: #475569;
+      background: #f8fafc;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    td {
+      font-size: 14px;
+    }
+
+    tbody tr {
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    tbody tr:hover {
+      background: #f8fbff;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .row-number {
+      width: 38px;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .logical-name {
+      font-weight: 900;
+    }
+
+    .definition {
+      min-width: 220px;
+      color: #475569;
+    }
+
+    .domain-chip {
+      display: inline-flex;
+      padding: 5px 9px;
+      color: var(--purple);
+      background: var(--purple-soft);
+      border-radius: 8px;
+      font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .domain-card {
+      min-width: 0;
+      padding: 18px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .domain-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    .domain-name {
+      overflow-wrap: anywhere;
+      color: var(--purple);
+      font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .domain-type {
+      margin-top: 9px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .domain-description {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer {
+      padding-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .metrics,
+      .domain-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .lineage-arrow {
+        display: none;
+      }
+
+      .lineage {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero {
+        padding: 46px 18px 92px;
+      }
+
+      .container {
+        padding-right: 14px;
+        padding-left: 14px;
+      }
+
+      .metrics,
+      .domain-grid,
+      .lineage {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 21px 16px;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .section-count {
+        display: inline-flex;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Bookstore Data Standard</div>
+
+      <h1>Day 2 데이터 표준 대시보드</h1>
+
+      <p class="hero-description">
+        레거시 컬럼을 표준 단어, 표준 용어 및 데이터 도메인으로
+        변환한 결과와 검증 상태를 한눈에 확인합니다.
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="metrics" aria-label="핵심 지표">
+      <article
+        class="metric-card"
+        style="--card-accent: var(--green-soft);"
+      >
+        <div class="metric-label">검증 상태</div>
+
+        <div class="metric-value">
+          <span
+            class="
+              status-badge
+              {% if validation.status == 'ready' %}
+                status-ready
+              {% else %}
+                status-blocked
+              {% endif %}
+            "
+          >
+            {{ validation.status }}
+          </span>
+        </div>
+      </article>
+
+      <article
+        class="metric-card"
+        style="--card-accent: var(--blue-soft);"
+      >
+        <div class="metric-label">표준 단어</div>
+        <div class="metric-value">{{ counts.words }}개</div>
+      </article>
+
+      <article
+        class="metric-card"
+        style="--card-accent: var(--purple-soft);"
+      >
+        <div class="metric-label">데이터 도메인</div>
+        <div class="metric-value">{{ counts.domains }}개</div>
+      </article>
+
+      <article
+        class="metric-card"
+        style="--card-accent: var(--orange-soft);"
+      >
+        <div class="metric-label">표준 용어</div>
+        <div class="metric-value">{{ counts.terms }}개</div>
+      </article>
+    </section>
+
+    {% if unit_price %}
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">
+              업무 의미로 판단한 표준화 사례
+            </h2>
+
+            <p class="section-description">
+              레거시 금액 컬럼이 단가로 결정된 전체 계보입니다.
+            </p>
+          </div>
+
+          <span class="section-count">UNIT PRICE</span>
+        </div>
+
+        <div class="lineage">
+          <div class="lineage-step">
+            <div class="lineage-label">원본 컬럼</div>
+            <div class="lineage-value">
+              <code>{{ unit_price.source_columns }}</code>
+            </div>
+          </div>
+
+          <div class="lineage-arrow">→</div>
+
+          <div class="lineage-step">
+            <div class="lineage-label">논리 용어</div>
+            <div class="lineage-value">
+              {{ unit_price.logical_term }}
+            </div>
+          </div>
+
+          <div class="lineage-arrow">→</div>
+
+          <div class="lineage-step">
+            <div class="lineage-label">표준 단어</div>
+            <div class="lineage-value">
+              <code>{{ unit_price.word_ids }}</code>
+            </div>
+          </div>
+
+          <div class="lineage-arrow">→</div>
+
+          <div class="lineage-step">
+            <div class="lineage-label">물리명</div>
+            <div class="lineage-value">
+              <code>{{ unit_price.physical_name }}</code>
+            </div>
+          </div>
+
+          <div class="lineage-arrow">→</div>
+
+          <div class="lineage-step">
+            <div class="lineage-label">도메인</div>
+            <div class="lineage-value">
+              <code>{{ unit_price.domain_id }}</code>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if unit_price %}
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">핵심 연결</h2>
+
+            <p class="section-description">
+            UNIT_PRICE 표준 용어의 주요 연결 관계입니다.
+            </p>
+          </div>
+        </div>
+
+        <p>
+      원본 컬럼
+        <strong>{{ unit_price.source_columns }}</strong>
+
+        ->
+
+      논리명
+        <strong>{{ unit_price.logical_term }}</strong>
+
+        ->
+
+      물리명
+        <strong>{{ unit_price.physical_name }}</strong>
+
+        ->
+
+      도메인
+        <strong>{{ unit_price.domain_id }}</strong>
+      </p>
+    </section>
+  {% endif %}
+    
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">
+            레거시 컬럼 표준화 결과
+          </h2>
+
+          <p class="section-description">
+            원본 컬럼과 표준 용어의 연결 관계를 보여줍니다.
+          </p>
+        </div>
+
+        <span class="section-count">
+          {{ counts.terms }} TERMS
+        </span>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>레거시 컬럼</th>
+              <th>논리 용어</th>
+              <th>물리명</th>
+              <th>표준 단어 조합</th>
+              <th>업무 정의</th>
+              <th>도메인</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for term in terms %}
+              <tr>
+                <td class="row-number">
+                  {{ forloop.counter }}
+                </td>
+
+                <td>
+                  <code>{{ term.source_columns }}</code>
+                </td>
+
+                <td class="logical-name">
+                  {{ term.logical_term }}
+                </td>
+
+                <td>
+                  <code>{{ term.physical_name }}</code>
+                </td>
+
+                <td>
+                  <code>{{ term.word_ids }}</code>
+                </td>
+
+                <td class="definition">
+                  {{ term.definition }}
+                </td>
+
+                <td>
+                  <span class="domain-chip">
+                    {{ term.domain_id }}
+                  </span>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="7">
+                  표시할 표준 용어가 없습니다.
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">데이터 도메인</h2>
+
+          <p class="section-description">
+            값의 형식과 저장 규칙을 정의하는 표준 도메인입니다.
+          </p>
+        </div>
+
+        <span class="section-count">
+          {{ counts.domains }} DOMAINS
+        </span>
+      </div>
+
+      <div class="domain-grid">
+        {% for domain in domains %}
+          <article class="domain-card">
+            <div class="domain-name">
+              {{ domain.domain_id }}
+            </div>
+
+            <div class="domain-type">
+              {{ domain.database_type }}
+
+              {% if domain.length %}
+                ({{ domain.length }})
+              {% elif domain.precision %}
+                ({{ domain.precision }}, {{ domain.scale }})
+              {% endif %}
+            </div>
+
+            <div class="domain-description">
+              {{ domain.description }}
+            </div>
+          </article>
+        {% empty %}
+          <p>표시할 데이터 도메인이 없습니다.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <footer class="footer">
+      Bookstore Data Standard · Day 2 Dashboard
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "status": "ready",
+  "checks": {
+    "legacy_column_count": 11,
+    "standard_word_count": 12,
+    "standard_term_count": 11,
+    "all_legacy_columns_mapped": true,
+    "all_term_words_exist": true,
+    "all_term_domains_exist": true,
+    "all_physical_names_follow_rule": true,
+    "physical_names_are_unique": true,
+    "logical_terms_are_unique": true,
+    "expected_standard_columns_match": true,
+    "amt_is_resolved_as_unit_price": true,
+    "unit_price_lineage_complete": true
+  },
+  "failed_checks": [],
+  "error_count": 0,
+  "errors": [],
+  "artifacts": [
+    "legacy-columns.csv",
+    "standard-words.csv",
+    "standard-terms.csv",
+    "naming-rules.yaml",
+    "data-domains.yaml",
+    "day2-validation.json",
+    "../day2-mission-notes/unit-price-lineage.md"
+  ]
+}

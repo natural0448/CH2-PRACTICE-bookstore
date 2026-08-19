@@ -1,0 +1,13 @@
+word_id,logical_word,english_word,approved_abbreviation,definition,legacy_examples
+MEMBER,회원,member,,온라인 서점에 가입하여 주문하는 사람,mbr
+ID,ID,identifier,ID,대상을 유일하게 구분하는 값,no|cd
+NAME,명,name,,대상의 이름,nm
+BOOK,도서,book,,판매하거나 주문할 수 있는 책,bk
+CATEGORY,카테고리,category,,도서를 묶는 업무 분류,ctg|분류
+CODE,코드,code,,정해진 규칙에 따라 값을 구분하는 짧은 값,cd
+ORDER,주문,order,,회원이 도서를 구매하겠다고 요청한 업무 사건,ord
+DATETIME,일시,datetime,,날짜와 시각을 함께 나타내는 값,dtm
+STATUS,상태,status,,업무가 현재 어느 단계인지 나타내는 값,st
+QUANTITY,수량,quantity,,주문한 도서의 권수,qty
+UNIT,단위,unit,,한 개 또는 한 권을 기준으로 함을 나타내는 말,
+PRICE,가격,price,,상품 한 단위에 적용되는 화폐 값,amt

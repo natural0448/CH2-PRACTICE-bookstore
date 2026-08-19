@@ -1,0 +1,12 @@
+legacy_column,standard_column,logical_term,conversion_rule,domain_id,required
+mbr_no,member_id,회원ID,strip_upper,ID_20,Y
+mbr_nm,member_name,회원명,strip,NAME_100,Y
+bk_cd,book_id,도서ID,strip_upper,ID_20,Y
+bk_nm,book_name,도서명,strip,NAME_200,Y
+ctg_cd,category_code,카테고리코드,strip_upper,CODE_20,Y
+ctg_nm,category_name,카테고리명,strip_then_category_master,NAME_100,Y
+ord_no,order_id,주문ID,strip_upper,ID_20,Y
+ord_dtm,order_datetime,주문일시,parse_to_iso_second,DATETIME_ISO_SECOND,Y
+ord_st,order_status_code,주문상태코드,map_order_status,ORDER_STATUS_CODE,Y
+qty,quantity,수량,parse_positive_integer,POSITIVE_INTEGER_3,Y
+amt,unit_price,단가,parse_non_negative_decimal,MONEY_12_2,Y

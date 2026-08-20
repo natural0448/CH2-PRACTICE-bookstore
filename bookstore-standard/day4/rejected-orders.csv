@@ -1,0 +1,8 @@
+mbr_no,mbr_nm,bk_cd,bk_nm,ctg_cd,ctg_nm,ord_no,ord_dtm,ord_st,qty,amt,rejection_reason
+M0003,박준호,B001,데이터 모델링 입문,C01,데이터,O1003,2026-08-11T11:00:00,DONE,1,18000,duplicate_business_key:order_id+book_id
+,최유진,B004,SQL 기초,C01,데이터,O1004,2026-08-11 12:00,결제완료,1,15000,missing_required:member_id
+M0005,한도윤,B005,MLOps 시작,C03,AI,O1005,2026-08-12 13:00,PAID,0,25000,out_of_domain:quantity
+M0006,윤가람,B006,클라우드 입문,C04,클라우드,O1006,2026-13-40 09:00,PAID,1,27000,invalid_format:order_datetime
+M0007,정하나,B007,통계 첫걸음,C05,통계,O1007,2026-08-12 15:30,보류,1,21000,unmapped_value:order_status_code
+M0008,오세진,B008,머신러닝 실습,C03,AI,O1008,2026-08-12 16:00,CANCEL,-1,32000,out_of_domain:quantity
+M0009,송지우,B010,딥러닝,C03,인공지능,O1010,2026-08-13 10:00,결제완료,2,-1000,out_of_domain:unit_price

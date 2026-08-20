@@ -10,17 +10,7 @@ Day 3 대시보드의 정상 데이터 표에서 주문 상태 코드인 `PAID`,
 - `SHIPPING`: 주황색
 - `DONE`: 초록색
 
-## 2. 수정 대상
-
-수정할 파일은 다음 템플릿 하나이다.
-
-```text
-C:\Chapter2\monorepo\bookstore\templates\day3_dashboard.html
-```
-
-`views.py`, `urls.py`, `services.py`는 수정하지 않는다. 이미 view가 `standardized_rows`를 템플릿에 전달하고 있고 각 행에는 `order_status_code`가 들어 있기 때문이다.
-
-## 3. 상태별 CSS 추가
+## 2. 상태별 CSS 추가
 
 `day3_dashboard.html`의 `<style>` 영역에서 다음 선택자를 찾는다.
 
@@ -64,7 +54,7 @@ C:\Chapter2\monorepo\bookstore\templates\day3_dashboard.html
 }
 ```
 
-## 4. 템플릿 클래스 변경
+## 3. 템플릿 클래스 변경
 
 같은 파일의 정상 데이터 표에서 다음 코드를 찾는다.
 
@@ -98,30 +88,8 @@ C:\Chapter2\monorepo\bookstore\templates\day3_dashboard.html
 
 `state-chip`은 공통 모양을 적용하고 `state-paid`는 PAID 전용 색상을 추가한다.
 
-## 5. 실행 및 확인
 
-프로젝트 루트에서 Django 검사를 실행한다.
-
-```powershell
-cd C:\Chapter2\monorepo
-python manage.py check
-```
-
-다음으로 개발 서버를 실행한다.
-
-```powershell
-python manage.py runserver
-```
-
-브라우저에서 다음 주소로 접속한다.
-
-```text
-http://127.0.0.1:8000/bookstore/day3/
-```
-
-CSS가 즉시 반영되지 않으면 `Ctrl+F5`를 눌러 강력 새로고침한다.
-
-## 6. 완료 확인
+## 4. 완료 확인
 
 정상 데이터 표에서 다음 상태가 서로 다른 색상으로 표시되는지 확인한다.
 
@@ -132,21 +100,3 @@ CSS가 즉시 반영되지 않으면 `Ctrl+F5`를 눌러 강력 새로고침한�
 | `DONE` | 초록색 배지 |
 
 세 상태 코드가 각각 다른 색상으로 구분되면 중급 미션 완료이다.
-
-## 7. 문제 발생 시 점검 사항
-
-색상이 모두 동일하면 상태 출력 요소에 동적 클래스가 적용되었는지 확인한다.
-
-```django
-state-{{ row.order_status_code|lower }}
-```
-
-스타일이 전혀 보이지 않으면 CSS가 `<style>` 태그 내부에 있는지 확인한다.
-
-상태 문자열이 화면에 나오지 않으면 정상 데이터 반복문이 다음 형태인지 확인한다.
-
-```django
-{% for row in standardized_rows %}
-  {{ row.order_status_code }}
-{% endfor %}
-```

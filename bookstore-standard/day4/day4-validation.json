@@ -1,0 +1,50 @@
+{
+  "day": 4,
+  "status": "ready",
+  "checks": {
+    "day3_inputs_exist": true,
+    "day3_validation_ready": true,
+    "day3_partition_is_13_equals_6_plus_7": true,
+    "day3_report_counts_match_actual": true,
+    "day4_artifacts_exist": true,
+    "accepted_entity_ids_are_stable": true,
+    "one_selected_identifier_per_entity": true,
+    "conceptual_model_mentions_all_entities": true,
+    "business_rules_define_source_grain": true,
+    "ai_scope_keeps_all_stable_ids": true,
+    "ai_scope_excludes_member_name": true
+  },
+  "evidence": {
+    "missing_day3_inputs": [],
+    "missing_day4_artifacts": [],
+    "day3_validation_status": "ready",
+    "day3_actual_counts": {
+      "legacy": 13,
+      "standardized": 6,
+      "rejected": 7
+    },
+    "day3_reported_counts": {
+      "legacy": 13,
+      "standardized": 6,
+      "rejected": 7
+    },
+    "accepted_entity_ids": [
+      "book",
+      "category",
+      "member",
+      "order",
+      "order-item"
+    ],
+    "selected_identifiers": {
+      "member": "member_id",
+      "book": "book_id",
+      "category": "category_code",
+      "order": "order_id",
+      "order-item": "order_id|book_id"
+    }
+  },
+  "next_day": {
+    "day": 5,
+    "purpose": "관계·PK/FK·도메인·정규화 확정"
+  }
+}

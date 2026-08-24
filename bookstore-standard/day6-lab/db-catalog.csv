@@ -1,0 +1,16 @@
+table_name,column_name,data_type,max_length,nullable
+members,member_id,VARCHAR,20,N
+members,member_name,VARCHAR,100,N
+categories,category_code,VARCHAR,20,N
+categories,category_name,VARCHAR,100,N
+books,book_id,VARCHAR,20,N
+books,book_name,VARCHAR,200,N
+books,category_code,VARCHAR,20,N
+orders,order_id,VARCHAR,20,N
+orders,member_id,VARCHAR,20,N
+orders,order_datetime,DATETIME,,N
+orders,order_status_code,VARCHAR,20,N
+order_items,order_id,VARCHAR,20,N
+order_items,book_id,VARCHAR,20,N
+order_items,quantity,INTEGER,,N
+order_items,unit_price,DECIMAL,12,N

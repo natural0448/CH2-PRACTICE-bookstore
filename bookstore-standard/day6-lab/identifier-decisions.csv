@@ -1,6 +1,0 @@
-entity_id,identifier_id,candidate_columns,selected,identifier_kind,uniqueness,minimality,stability,not_null,decision_reason,rejected_alternative
-member,member-pk,member_id,Y,single,Y,Y,Y,Y,회원명 중복과 무관하게 회원을 구분한다,member_name
-book,book-pk,book_id,Y,single,Y,Y,Y,Y,도서명이 같아도 도서를 구분한다,book_name
-category,category-pk,category_code,Y,single,Y,Y,Y,Y,카테고리 이름 변경과 식별을 분리한다,category_name
-order,order-pk,order_id,Y,single,Y,Y,Y,Y,주문 사건 한 건에 한 번호를 부여한다,order_datetime
-order-item,order-item-pk,"order_id|book_id",Y,composite,Y,Y,Y,Y,한 주문에서 같은 도서는 최대 한 줄이라는 BR-11을 사용한다,quantity

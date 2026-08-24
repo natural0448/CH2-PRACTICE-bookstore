@@ -1,0 +1,6 @@
+book_id,book_name,category_code
+B001,데이터 모델링 입문,C01
+B002,파이썬 첫걸음,C02
+B003,Django 웹 개발,C02
+B009,데이터 품질,C01
+B011,신경망,C03

@@ -1,0 +1,93 @@
+{
+  "day": 6,
+  "status": "ready",
+  "as_of_date": "2026-08-12",
+  "checks": {
+    "day6_artifacts_exist": true,
+    "normalized_input_files_exist": true,
+    "day5_normalization_is_ready": true,
+    "normalized_schema_keeps_five_entity_write_model": true,
+    "feature_view_spec_matches_30_day_contract": true,
+    "feature_terms_are_approved_and_domain_bound": true,
+    "denormalization_decision_has_controls": true,
+    "catalog_has_15_unique_standard_columns": true,
+    "catalog_check_report_is_pass": true,
+    "source_csv_schemas_match": true,
+    "source_required_values_complete": true,
+    "source_primary_keys_are_unique": true,
+    "source_foreign_keys_are_valid": true,
+    "source_domains_are_valid": true,
+    "fixed_fixture_counts_match": true,
+    "feature_csv_schema_matches": true,
+    "feature_grain_is_unique": true,
+    "single_valid_as_of_date": true,
+    "feature_domains_are_valid": true,
+    "feature_has_one_row_per_member": true,
+    "feature_values_match_independent_recalculation": true,
+    "time_filter_prevents_future_leakage": true,
+    "empty_member_is_preserved_with_zero_features": true
+  },
+  "evidence": {
+    "input_dir": "C:\\Chapter2\\monorepo\\bookstore-standard\\day6-lab",
+    "feature_file": "C:\\Chapter2\\monorepo\\bookstore-standard\\day6-lab\\feature-sample.csv",
+    "day5_normalization_report": "C:\\Chapter2\\monorepo\\bookstore-standard\\day5\\normalization-report.json",
+    "day5_normalized_schema": "C:\\Chapter2\\monorepo\\bookstore-standard\\day5\\normalized-schema.sql",
+    "missing_artifacts": [],
+    "missing_inputs": [],
+    "source_counts": {
+      "member": 4,
+      "category": 3,
+      "book": 5,
+      "book_order": 5,
+      "order_item": 6
+    },
+    "expected_source_counts": {
+      "member": 4,
+      "category": 3,
+      "book": 5,
+      "book_order": 5,
+      "order_item": 6
+    },
+    "duplicate_source_keys": {
+      "member": [],
+      "category": [],
+      "book": [],
+      "book_order": [],
+      "order_item": []
+    },
+    "foreign_key_violations": [],
+    "catalog_duplicate_columns": [],
+    "catalog_mismatches": [],
+    "eligible_order_ids": [
+      "O1001",
+      "O1002",
+      "O1003"
+    ],
+    "excluded_order_counts": {
+      "status": 0,
+      "before_window": 0,
+      "as_of_or_future": 2
+    },
+    "feature_row_count": 4,
+    "expected_feature_row_count": 4,
+    "feature_mismatches": [],
+    "failed_checks": [],
+    "issues": []
+  },
+  "artifacts": [
+    "build_features.py",
+    "feature-view-spec.yaml",
+    "feature-standard-extension.yaml",
+    "denormalization-decision.md",
+    "db-catalog.csv",
+    "check_catalog.py",
+    "catalog-standard-check.json",
+    "feature-sample.csv",
+    "day6-validation.json"
+  ],
+  "next_day": {
+    "day": 7,
+    "ready_input": "feature-sample.csv",
+    "grain": "one row per member_id and as_of_date"
+  }
+}

@@ -9,6 +9,6 @@ urlpatterns = [
     path("day4/", views.day4_dashboard, name="day4_dashboard"),
     path("day5/", views.day5_orm_dashboard, name="day5_dashboard"),
     path("day5/raw/", views.day5_raw_dashboard, name="day5_raw_dashboard"),
-
+    path("day6/", views.day6_dashboard, name="day6_dashboard"),
 ]
 

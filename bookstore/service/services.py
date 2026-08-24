@@ -219,3 +219,36 @@ def get_day5_raw_dashboard():
             Decimal("0.00"),
         ),
     }
+
+def get_day6_feature_dashboard_context():
+    """Day 6 feature와 카탈로그 검증 결과를 화면 context로 만든다."""
+    data_dir = Path(settings.BASE_DIR) / "bookstore-standard" / "day6-lab"
+
+    features = read_csv(data_dir / "feature-sample.csv")
+    with (data_dir / "catalog-standard-check.json").open(
+        encoding="utf-8",
+    ) as file:
+        catalog_report = json.load(file)
+
+    as_of_dates = {row["as_of_date"] for row in features}
+    future_leak_count = sum(
+        row["last_order_days_ago"] != ""
+        and int(row["last_order_days_ago"]) < 0
+        for row in features
+    )
+    dashboard_pass = (
+        len(features) == 4
+        and as_of_dates == {"2026-08-12"}
+        and future_leak_count == 0
+        and catalog_report.get("overall_status") == "PASS"
+        and catalog_report.get("fail_count") == 0
+    )
+
+    return {
+        "features": features,
+        "as_of_date": "2026-08-12",
+        "feature_row_count": len(features),
+        "future_leak_count": future_leak_count,
+        "catalog_report": catalog_report,
+        "dashboard_pass": dashboard_pass,
+    }

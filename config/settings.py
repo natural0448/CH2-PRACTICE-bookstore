@@ -10,10 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'University.apps.UniversityConfig',
-    'bookstore',
+    'bookstore.apps.BookstoreConfig',
 
 ]
 
@@ -78,8 +83,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.environ["BOOKSTORE_MYSQL_NAME"],
+        "USER": os.environ["BOOKSTORE_MYSQL_USER"],
+        "PASSWORD": os.environ["BOOKSTORE_MYSQL_PASSWORD"],
+        "HOST": os.environ["BOOKSTORE_MYSQL_HOST"],
+        "PORT": os.environ["BOOKSTORE_MYSQL_PORT"],
+        "OPTIONS": {"charset": "utf8mb4"},
     }
 }
 

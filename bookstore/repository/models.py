@@ -58,3 +58,75 @@ class StandardTerm(models.Model):
 
     def __str__(self):
         return f"{self.logical_term} ({self.physical_name})"
+
+    
+
+class Member(models.Model):
+    member_id = models.CharField(max_length=20, primary_key=True)
+    member_name = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = "member"
+
+
+class Category(models.Model):
+    category_code = models.CharField(max_length=20, primary_key=True)
+    category_name = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = "category"
+
+
+class Book(models.Model):
+    book_id = models.CharField(max_length=20, primary_key=True)
+    book_name = models.CharField(max_length=200)
+    category = models.ForeignKey(
+        Category,
+        models.DO_NOTHING,
+        db_column="category_code",
+        related_name="+",
+    )
+
+    class Meta:
+        managed = False
+        db_table = "book"
+
+
+class BookOrder(models.Model):
+    order_id = models.CharField(max_length=20, primary_key=True)
+    member = models.ForeignKey(
+        Member,
+        models.DO_NOTHING,
+        db_column="member_id",
+        related_name="+",
+    )
+    order_datetime = models.DateTimeField()
+    order_status_code = models.CharField(max_length=20)
+
+    class Meta:
+        managed = False
+        db_table = "book_order"
+
+
+class OrderItem(models.Model):
+    pk = models.CompositePrimaryKey("order_id", "book_id")
+    order = models.ForeignKey(
+        BookOrder,
+        models.DO_NOTHING,
+        db_column="order_id",
+        related_name="+",
+    )
+    book = models.ForeignKey(
+        Book,
+        models.DO_NOTHING,
+        db_column="book_id",
+        related_name="+",
+    )
+    quantity = models.PositiveSmallIntegerField()
+    unit_price = models.DecimalField(max_digits=12, decimal_places=2)
+
+    class Meta:
+        managed = False
+        db_table = "order_item"

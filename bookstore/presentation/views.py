@@ -2,6 +2,9 @@ from django.shortcuts import render
 from bookstore.service.services import get_bookstore_standard_context
 from bookstore.service.services import get_bookstore_Standardizated_data
 from bookstore.service.services import get_bookstore_Standard_enterty
+from bookstore.service.services import get_day5_orm_dashboard
+from bookstore.service.services import get_day5_raw_dashboard
+
 
 
 
@@ -23,3 +26,19 @@ def day4_dashboard(request):
     #services.py의 get_bookstore_Standardard_enterty() 함수를 호출하여, enterty 결정사항을 확인하고, 그 결과를 day4_dashboard.html 템플릿에 전달합니다.
     enterty_decision = get_bookstore_Standard_enterty()
     return render(request, "day4_dashboard.html", enterty_decision)
+
+
+def day5_orm_dashboard(request):
+    return render(
+        request,
+        "day5_dashboard.html",
+        get_day5_orm_dashboard(),
+    )
+
+
+def day5_raw_dashboard(request):
+    return render(
+        request,
+        "day5_dashboard.html",
+        get_day5_raw_dashboard(),
+    )

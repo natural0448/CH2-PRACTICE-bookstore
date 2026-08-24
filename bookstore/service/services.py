@@ -3,6 +3,9 @@ import json
 from pathlib import Path
 from collections import Counter
 from decimal import Decimal
+from django.db.models import DecimalField, ExpressionWrapper, F
+from bookstore.repository.models import OrderItem
+from django.db import connection
 
 
 import yaml
@@ -146,3 +149,73 @@ def get_bookstore_Standard_enterty():
         "order_amount": order_amount,
     }
     return context
+
+def get_day5_orm_dashboard():
+    line_amount = ExpressionWrapper(
+        F("quantity") * F("unit_price"),
+        output_field=DecimalField(max_digits=14, decimal_places=2),
+    )
+    items = (
+        OrderItem.objects
+        .select_related("order__member", "book__category")
+        .annotate(line_amount=line_amount)
+        .order_by("order_id", "book_id")
+    )
+    rows = [
+        {
+            "order_id": item.order_id,
+            "member_name": item.order.member.member_name,
+            "book_name": item.book.book_name,
+            "category_name": item.book.category.category_name,
+            "order_status_code": item.order.order_status_code,
+            "quantity": item.quantity,
+            "unit_price": item.unit_price,
+            "line_amount": item.line_amount,
+        }
+        for item in items
+    ]
+    return {
+        "query_mode": "Django ORM",
+        "rows": rows,
+        "row_count": len(rows),
+        "total_amount": sum(
+            (row["line_amount"] for row in rows),
+            Decimal("0.00"),
+        ),
+    }
+
+
+
+def get_day5_raw_dashboard():
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """
+            SELECT
+                o.order_id,
+                m.member_name,
+                b.book_name,
+                c.category_name,
+                o.order_status_code,
+                oi.quantity,
+                oi.unit_price,
+                oi.quantity * oi.unit_price AS line_amount
+            FROM order_item AS oi
+            JOIN book_order AS o ON o.order_id = oi.order_id
+            JOIN member AS m ON m.member_id = o.member_id
+            JOIN book AS b ON b.book_id = oi.book_id
+            JOIN category AS c ON c.category_code = b.category_code
+            ORDER BY o.order_id, b.book_id
+            """
+        )
+        columns = [column[0] for column in cursor.description]
+        rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+    return {
+        "query_mode": "Raw Query",
+        "rows": rows,
+        "row_count": len(rows),
+        "total_amount": sum(
+            (row["line_amount"] for row in rows),
+            Decimal("0.00"),
+        ),
+    }

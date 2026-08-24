@@ -1,0 +1,50 @@
+version: 1
+project: online-bookstore-recommendation
+objective:
+  id: member-book-preference
+  description: 회원별 도서 및 카테고리 선호 데이터 준비
+  prediction_target: 다음에 선호할 가능성이 높은 도서
+source_grain:
+  entity_id: order-item
+  description: 주문 한 건에 포함된 도서 한 종
+stable_entity_ids:
+  - member
+  - book
+  - category
+  - order
+  - order-item
+entity_roles:
+  member: recommendation-subject
+  book: recommendation-candidate
+  category: preference-context
+  order: behavior-session
+  order-item: behavior-fact
+included_fields:
+  - member_id
+  - book_id
+  - category_code
+  - order_id
+  - order_datetime
+  - order_status_code
+  - quantity
+  - unit_price
+excluded_fields:
+  - field: member_name
+    reason: 추천 계산에 필요하지 않은 직접 식별 정보
+  - field: book_name
+    reason: 학습 키가 아니라 결과 설명 화면에서 조인해 사용할 값
+  - field: category_name
+    reason: 학습 키가 아니라 결과 설명 화면에서 조인해 사용할 값
+filter_policy:
+  include_order_status_codes:
+    - PAID
+    - SHIPPING
+    - DONE
+  exclude_order_status_codes:
+    - CANCELLED
+time_policy:
+  event_time_field: order_datetime
+  rule: 학습 기준시점보다 미래인 주문은 입력에 포함하지 않는다
+open_decisions:
+  - 환불 상태 코드가 추가되면 포함 여부를 업무 담당자와 결정한다
+  - 회원 탈퇴 시 ID 처리 정책은 개인정보 정책과 함께 결정한다

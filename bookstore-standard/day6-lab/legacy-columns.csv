@@ -1,0 +1,12 @@
+source_system,legacy_column,sample_value,legacy_description,issue
+old_bookstore,mbr_no,M0001,회원번호,no 약어와 ID 표현이 혼재함
+old_bookstore,mbr_nm,김민수,회원명,nm 약어를 사용함
+old_bookstore,bk_cd,B001,도서코드,cd가 식별자를 뜻하는지 불명확함
+old_bookstore,bk_nm,데이터 모델링 입문,도서명,nm 약어를 사용함
+old_bookstore,ctg_cd,C01,분류코드,ctg 약어를 처음 보는 사람이 이해하기 어려움
+old_bookstore,ctg_nm,데이터,분류명,분류와 카테고리 표현이 혼재함
+old_bookstore,ord_no,O1001,주문번호,no 약어와 ID 표현이 혼재함
+old_bookstore,ord_dtm,2026-08-10 09:15,주문일시,dtm 약어와 날짜 형식이 문서화되지 않음
+old_bookstore,ord_st,paid,주문상태,st 약어와 허용값이 문서화되지 않음
+old_bookstore,qty,2,수량,qty 약어를 사용함
+old_bookstore,amt,18000,금액,한 권 가격인지 주문 금액인지 불명확함

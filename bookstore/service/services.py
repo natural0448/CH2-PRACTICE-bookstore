@@ -223,7 +223,7 @@ def get_day5_raw_dashboard():
 
 def get_day6_feature_dashboard_context(as_of_date="2026-08-12"):
     """선택한 기준일로 Day 6 회원 feature를 다시 계산한다."""
-    data_dir = Path(settings.BASE_DIR) / "bookstore-standard" / "day6-lab"
+    data_dir = Path(settings.BASE_DIR) / "day6-lab"
 
     try:
         selected_date = datetime.strptime(as_of_date, "%Y-%m-%d")

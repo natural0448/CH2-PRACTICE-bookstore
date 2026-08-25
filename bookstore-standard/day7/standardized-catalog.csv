@@ -1,0 +1,8 @@
+source_table_name,source_column_name,standard_table_name,standard_column_name,logical_name,word_ids,domain_id,data_type,max_length,nullable,translation_status
+ml_mbr_ftr,mbr_no,member_book_preference_features,member_id,회원ID,MEMBER|ID,ID_20,VARCHAR,20,N,MAPPED
+ml_mbr_ftr,base_dt,member_book_preference_features,as_of_date,기준일자,AS_OF|DATE,DATE_ISO,DATE,,N,MAPPED
+ml_mbr_ftr,ord_cnt_30d,member_book_preference_features,order_count_30d,30일주문건수,WINDOW_30D|ORDER|COUNT,NON_NEGATIVE_INTEGER,INTEGER,,N,MAPPED
+ml_mbr_ftr,qty_sum_30d,member_book_preference_features,quantity_sum_30d,30일수량합계,WINDOW_30D|QUANTITY|SUM,NON_NEGATIVE_INTEGER,INTEGER,,N,MAPPED
+ml_mbr_ftr,spend_amt_30d,member_book_preference_features,spend_sum_30d,30일구매금액합계,WINDOW_30D|SPEND|SUM,MONEY_12_2,DECIMAL,12,N,MAPPED
+ml_mbr_ftr,pref_ctg_cd_30d,member_book_preference_features,preferred_category_code_30d,30일선호카테고리코드,WINDOW_30D|PREFERRED|CATEGORY|CODE,OPTIONAL_CODE_20,VARCHAR,20,Y,MAPPED
+ml_mbr_ftr,last_ord_days,member_book_preference_features,last_order_days_ago,마지막주문경과일수,LAST|ORDER|DAYS_AGO,OPTIONAL_NON_NEGATIVE_INTEGER,INTEGER,,Y,MAPPED

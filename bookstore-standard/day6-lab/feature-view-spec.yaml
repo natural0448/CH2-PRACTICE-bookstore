@@ -1,0 +1,55 @@
+feature_view:
+  name: member_book_preference_features
+  description: 회원별 도서 선호와 추천 학습을 위한 최근 30일 구매 특징
+  entity_key: member_id
+  as_of_column: as_of_date
+  as_of_domain: DATE_ISO
+  standard_extension: feature-standard-extension.yaml
+  source_model: day5_normalized_write_model
+  refresh:
+    schedule: daily
+    hour_kst: 1
+  time_rule:
+    window_days: 30
+    include_start: true
+    include_as_of: false
+    expression: as_of_date_minus_30_days_lte_order_datetime_lt_as_of_date
+  filters:
+    order_status_code:
+      allowed:
+        - PAID
+        - SHIPPING
+        - DONE
+  features:
+    - name: order_count_30d
+      type: integer
+      domain: NON_NEGATIVE_INTEGER
+      nullable: false
+      minimum: 0
+      description: 최근 30일 허용 상태 주문 수
+    - name: quantity_sum_30d
+      type: integer
+      domain: NON_NEGATIVE_INTEGER
+      nullable: false
+      minimum: 0
+      description: 최근 30일 구매 수량 합계
+    - name: spend_sum_30d
+      type: decimal_12_2
+      domain: MONEY_12_2
+      nullable: false
+      minimum: 0
+      description: 최근 30일 구매 금액 합계
+    - name: preferred_category_code_30d
+      type: category_code
+      domain: OPTIONAL_CODE_20
+      nullable: true
+      description: 최근 30일 구매 수량이 가장 많은 카테고리 코드
+      tie_breaker: category_code_ascending
+    - name: last_order_days_ago
+      type: integer
+      domain: OPTIONAL_NON_NEGATIVE_INTEGER
+      nullable: true
+      minimum: 0
+      description: 마지막 허용 상태 주문일부터 기준일까지 지난 날짜 수
+  owner: data_team
+  purpose: member_book_recommendation_training

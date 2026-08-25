@@ -4,7 +4,7 @@ from bookstore.service.services import get_bookstore_Standardizated_data
 from bookstore.service.services import get_bookstore_Standard_enterty
 from bookstore.service.services import get_day5_orm_dashboard
 from bookstore.service.services import get_day5_raw_dashboard
-
+from bookstore.service.services import get_day6_feature_dashboard_context
 
 
 
@@ -41,4 +41,13 @@ def day5_raw_dashboard(request):
         request,
         "day5_dashboard.html",
         get_day5_raw_dashboard(),
+    )
+
+def day6_dashboard(request):
+    as_of_date = request.GET.get("as_of_date", "2026-08-12")
+    context = get_day6_feature_dashboard_context(as_of_date)
+    return render(
+        request,
+        "day6_dashboard.html",
+        context,
     )

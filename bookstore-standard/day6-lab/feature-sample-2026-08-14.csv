@@ -1,0 +1,5 @@
+member_id,as_of_date,order_count_30d,quantity_sum_30d,spend_sum_30d,preferred_category_code_30d,last_order_days_ago
+M0001,2026-08-14,2,4,77000.00,C01,1
+M0002,2026-08-14,1,1,30000.00,C02,4
+M0003,2026-08-14,1,1,18000.00,C01,3
+M0010,2026-08-14,1,1,28000.00,C03,1

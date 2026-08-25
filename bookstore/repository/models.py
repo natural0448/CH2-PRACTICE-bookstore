@@ -130,3 +130,45 @@ class OrderItem(models.Model):
     class Meta:
         managed = False
         db_table = "order_item"
+
+
+class RecommendationFeature(models.Model):
+    member = models.ForeignKey(
+        "Member",
+        on_delete=models.PROTECT,
+        db_column="member_id",
+        related_name="recommendation_features",
+    )
+    as_of_date = models.DateField()
+    order_count_30d = models.PositiveIntegerField()
+    quantity_sum_30d = models.PositiveIntegerField()
+    spend_sum_30d = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+    )
+    preferred_category = models.ForeignKey(
+        "Category",
+        on_delete=models.PROTECT,
+        db_column="preferred_category_code_30d",
+        related_name="preferred_by_features",
+        null=True,
+        blank=True,
+    )
+    last_order_days_ago = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+    )
+    source_file = models.CharField(max_length=200)
+    loaded_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["member", "as_of_date"],
+                name="uq_recommendation_feature_member_date",
+            )
+        ]
+        ordering = ["as_of_date", "member_id"]
+
+    def __str__(self):
+        return f"{self.member_id} / {self.as_of_date}"

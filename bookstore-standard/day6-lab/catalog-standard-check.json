@@ -1,0 +1,99 @@
+{
+  "catalog_file": "db-catalog.csv",
+  "checked_column_count": 15,
+  "pass_count": 15,
+  "fail_count": 0,
+  "overall_status": "PASS",
+  "results": [
+    {
+      "table_name": "members",
+      "column_name": "member_id",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "members",
+      "column_name": "member_name",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "categories",
+      "column_name": "category_code",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "categories",
+      "column_name": "category_name",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "books",
+      "column_name": "book_id",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "books",
+      "column_name": "book_name",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "books",
+      "column_name": "category_code",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "orders",
+      "column_name": "order_id",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "orders",
+      "column_name": "member_id",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "orders",
+      "column_name": "order_datetime",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "orders",
+      "column_name": "order_status_code",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "order_items",
+      "column_name": "order_id",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "order_items",
+      "column_name": "book_id",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "order_items",
+      "column_name": "quantity",
+      "status": "PASS",
+      "reason": "matched"
+    },
+    {
+      "table_name": "order_items",
+      "column_name": "unit_price",
+      "status": "PASS",
+      "reason": "matched"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+version: 1
+dataset:
+  name: member_book_preference_features
+  source_file: ../../day6-lab/feature-sample.csv
+  expected_row_count: 4
+  expected_columns:
+    - member_id
+    - as_of_date
+    - order_count_30d
+    - quantity_sum_30d
+    - spend_sum_30d
+    - preferred_category_code_30d
+    - last_order_days_ago
+dimensions:
+  completeness:
+    required_columns:
+      - member_id
+      - as_of_date
+      - order_count_30d
+      - quantity_sum_30d
+      - spend_sum_30d
+    conditional_nullable_columns:
+      - preferred_category_code_30d
+      - last_order_days_ago
+    allowed_null_condition: order_count_30d_equals_zero
+    maximum_violation_count: 0
+  uniqueness:
+    key_columns:
+      - member_id
+      - as_of_date
+    maximum_duplicate_count: 0
+  validity:
+    non_negative_columns:
+      - order_count_30d
+      - quantity_sum_30d
+      - spend_sum_30d
+      - last_order_days_ago
+    zero_order_requires_zero_sums: true
+    maximum_violation_count: 0
+  referential_integrity:
+    member_reference:
+      source_file: ../day3/standardized-orders.csv
+      feature_column: member_id
+      reference_column: member_id
+    category_reference:
+      source_file: ../day3/standardized-orders.csv
+      feature_column: preferred_category_code_30d
+      reference_column: category_code
+    maximum_unknown_count: 0
+  point_in_time:
+    expected_as_of_date: '2026-08-12'
+    source_file: ../day3/standardized-orders.csv
+    source_datetime_column: order_datetime
+    include_as_of_date: false
+    maximum_future_leak_count: 0
+quality_gate:
+  required_dimensions:
+    - completeness
+    - uniqueness
+    - validity
+    - referential_integrity
+    - point_in_time
+  maximum_failed_dimension_count: 0

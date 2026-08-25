@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent
-DAY5_DIR = BASE_DIR.parent / "day5"
+DAY5_DIR = BASE_DIR.parent / "bookstore-standard" / "day5"
 
 SOURCE_SCHEMAS = {
     "members.csv": ["member_id", "member_name"],

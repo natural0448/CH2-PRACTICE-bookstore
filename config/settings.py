@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'University.apps.UniversityConfig',
     'bookstore.apps.BookstoreConfig',
+    'db_mount.apps.DbMountConfig',
 
 ]
 
@@ -90,6 +91,10 @@ DATABASES = {
         "HOST": os.environ["BOOKSTORE_MYSQL_HOST"],
         "PORT": os.environ["BOOKSTORE_MYSQL_PORT"],
         "OPTIONS": {"charset": "utf8mb4"},
+    },
+    'sqlite3': {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 

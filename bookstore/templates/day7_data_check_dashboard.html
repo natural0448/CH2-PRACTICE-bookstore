@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Day 7 데이터 표준화 검사</title>
+  <style>
+    :root {
+      --green:#059669; --green-soft:#ecfdf5; --teal:#0f766e;
+      --blue:#2563eb; --blue-soft:#eff6ff; --red:#dc2626;
+      --red-soft:#fef2f2; --amber:#d97706; --amber-soft:#fffbeb;
+      --background:#f1f5f9; --border:#e2e8f0;
+      --text:#0f172a; --muted:#64748b;
+      --shadow:0 14px 35px rgba(15,23,42,.08); --radius:18px;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; color:var(--text);
+      background:radial-gradient(circle at top right,rgba(5,150,105,.13),transparent 28rem),var(--background);
+      font-family:Pretendard,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
+      line-height:1.6;
+    }
+    .hero {
+      padding:32px 24px 108px; color:#fff;
+      background:radial-gradient(circle at 80% 20%,rgba(45,212,191,.28),transparent 22rem),linear-gradient(135deg,#0f172a 0%,#134e4a 52%,#059669 100%);
+    }
+    .hero-inner,.container { width:min(1180px,100%); margin:0 auto; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:42px; }
+    .brand { color:#a7f3d0; font-size:13px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
+    .nav { display:flex; flex-wrap:wrap; gap:8px; }
+    .nav a {
+      padding:7px 12px; color:#cbd5e1; border:1px solid rgba(255,255,255,.2);
+      border-radius:999px; font-size:13px; font-weight:800; text-decoration:none;
+    }
+    .nav a:hover,.nav a[aria-current="page"] { color:#fff; background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.42); }
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:8px; margin-bottom:14px;
+      color:#a7f3d0; font-size:13px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+    }
+    .eyebrow::before { width:9px; height:9px; content:""; background:#2dd4bf; border-radius:999px; box-shadow:0 0 0 5px rgba(45,212,191,.18); }
+    h1 { margin:0; font-size:clamp(32px,5vw,52px); line-height:1.15; letter-spacing:-.04em; }
+    .hero-description { max-width:780px; margin:18px 0 0; color:#d1fae5; font-size:17px; }
+    .container { position:relative; margin-top:-64px; padding:0 24px 70px; }
+    .section,.metric-card {
+      background:rgba(255,255,255,.98); border:1px solid rgba(226,232,240,.9);
+      border-radius:var(--radius); box-shadow:var(--shadow);
+    }
+    .section { margin-top:24px; padding:30px; }
+    .section:first-child { margin-top:0; }
+    .section-header { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:22px; }
+    .section-title { margin:0; font-size:22px; letter-spacing:-.03em; }
+    .section-description { margin:5px 0 0; color:var(--muted); font-size:14px; }
+    .section-count { flex:0 0 auto; padding:6px 11px; color:var(--green); background:var(--green-soft); border-radius:999px; font-size:13px; font-weight:900; }
+    .upload-form { display:grid; gap:16px; }
+    .drop-zone {
+      display:flex; min-height:230px; padding:30px; align-items:center; justify-content:center;
+      border:2px dashed #94a3b8; border-radius:16px; background:#f8fafc;
+      text-align:center; cursor:pointer; transition:.18s ease;
+    }
+    .drop-zone:hover,.drop-zone.is-dragging { color:var(--teal); border-color:var(--green); background:var(--green-soft); transform:translateY(-1px); }
+    .drop-icon {
+      display:grid; width:58px; height:58px; margin:0 auto 14px; place-items:center;
+      color:var(--green); background:var(--green-soft); border-radius:16px; font-size:27px; font-weight:900;
+    }
+    .drop-title { margin:0; font-size:19px; font-weight:900; }
+    .drop-copy { margin:5px 0 0; color:var(--muted); font-size:13px; }
+    .selected-file { margin:12px 0 0; color:var(--teal); font-size:13px; font-weight:900; }
+    .form-actions { display:flex; align-items:center; justify-content:space-between; gap:14px; }
+    .contract { color:var(--muted); font-size:12px; }
+    .button {
+      min-width:150px; padding:12px 20px; color:#fff; background:var(--green);
+      border:0; border-radius:11px; font:inherit; font-weight:900; cursor:pointer;
+    }
+    .button:hover { background:#047857; }
+    .alert { margin-top:18px; padding:14px 16px; color:#991b1b; background:var(--red-soft); border:1px solid #fecaca; border-radius:12px; font-weight:800; }
+    .metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:24px; }
+    .metric-card { min-height:125px; padding:21px; }
+    .metric-label { color:var(--muted); font-size:13px; font-weight:800; }
+    .metric-value { margin-top:8px; font-size:29px; font-weight:900; line-height:1.15; }
+    .metric-note { margin-top:7px; color:var(--muted); font-size:11px; overflow-wrap:anywhere; }
+    .status-badge {
+      display:inline-flex; align-items:center; gap:7px; padding:7px 12px;
+      border-radius:999px; font-size:14px; font-weight:900; white-space:nowrap;
+    }
+    .status-badge::before { width:8px; height:8px; content:""; background:currentColor; border-radius:999px; }
+    .is-pass { color:var(--green); background:var(--green-soft); }
+    .is-fail { color:var(--red); background:var(--red-soft); }
+    .check-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .check-card { padding:18px; border:1px solid var(--border); border-radius:14px; background:#f8fafc; }
+    .check-top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .check-name { margin:0; font-size:16px; }
+    .check-copy { margin:10px 0 0; color:var(--muted); font-size:12px; }
+    .issue-count { margin-top:9px; color:var(--muted); font-size:12px; font-weight:800; }
+    .table-wrapper { overflow-x:auto; border:1px solid var(--border); border-radius:14px; }
+    table { width:100%; min-width:820px; border-collapse:collapse; }
+    th,td { padding:13px 14px; border-bottom:1px solid var(--border); text-align:left; vertical-align:top; }
+    th { color:#475569; background:#f8fafc; font-size:12px; font-weight:900; white-space:nowrap; }
+    td { color:#334155; font-size:13px; }
+    tbody tr:last-child td { border-bottom:0; }
+    tbody tr:hover { background:#f7fffc; }
+    .code-chip { display:inline-flex; padding:3px 7px; color:#0e7490; background:#ecfeff; border-radius:7px; font-family:"Cascadia Code",Consolas,monospace; font-size:11px; font-weight:800; white-space:nowrap; }
+    .empty-state { padding:28px; color:var(--muted); text-align:center; }
+    .source-note { margin-top:18px; padding:15px 17px; color:#475569; background:#ecfeff; border:1px solid #a5f3fc; border-radius:12px; font-size:13px; }
+    .footer { padding-top:28px; color:var(--muted); font-size:13px; text-align:center; }
+    @media (max-width:900px) {
+      .metrics { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .check-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width:600px) {
+      .hero { padding:24px 18px 92px; }
+      .topbar { align-items:flex-start; flex-direction:column; margin-bottom:34px; }
+      .container { padding-right:14px; padding-left:14px; }
+      .section { padding:21px 16px; }
+      .section-header,.form-actions { align-items:stretch; flex-direction:column; }
+      .metrics,.check-grid { grid-template-columns:1fr; }
+      .button { width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="topbar">
+        <div class="brand">Bookstore Data Standard</div>
+        <nav class="nav" aria-label="대시보드 이동">
+          <a href="/bookstore/day2/">Day 2</a>
+          <a href="/bookstore/day3/">Day 3</a>
+          <a href="/bookstore/day4/">Day 4</a>
+          <a href="/bookstore/day5/">Day 5</a>
+          <a href="/bookstore/day6/">Day 6</a>
+          <a href="/bookstore/day7/">Day 7</a>
+          <a href="/bookstore/day7/data_check/" aria-current="page">파일 검사</a>
+        </nav>
+      </div>
+      <div class="eyebrow">On-demand Data Quality Check</div>
+      <h1>데이터 표준화 검사 리포트</h1>
+      <p class="hero-description">
+        Day 7 feature CSV·JSON·NDJSON을 드래그앤드롭하면 파일을 저장하지 않고
+        스키마와 다섯 품질 차원을 즉시 검사합니다.
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">검사할 데이터 파일 업로드</h2>
+          <p class="section-description">UTF-8 CSV, JSON 또는 NDJSON 한 개를 선택하세요.</p>
+        </div>
+        <span class="section-count">최대 {{ max_upload_mb }}MB</span>
+      </div>
+      <form class="upload-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label class="drop-zone" id="drop-zone" for="data-file">
+          <span>
+            <span class="drop-icon" aria-hidden="true">↓</span>
+            <span class="drop-title">CSV·JSON·NDJSON 파일을 이곳에 놓으세요</span>
+            <span class="drop-copy">또는 클릭해서 파일을 선택할 수 있습니다.</span>
+            <span class="selected-file" id="selected-file">선택된 파일 없음</span>
+          </span>
+        </label>
+        <input id="data-file" name="data_file" type="file" accept=".csv,.json,.ndjson,text/csv,application/json,application/x-ndjson" required hidden>
+        <div class="form-actions">
+          <div class="contract">
+            검사 계약: 7개 표준 컬럼 · 4개 행 · 기준일 2026-08-12 · UTF-8
+          </div>
+          <button class="button" type="submit">표준화 검사 실행</button>
+        </div>
+      </form>
+      {% if upload_error %}
+        <div class="alert" role="alert">{{ upload_error }}</div>
+      {% endif %}
+    </section>
+
+    {% if report %}
+      <section class="metrics" aria-label="검사 요약">
+        <article class="metric-card">
+          <div class="metric-label">표준화 여부</div>
+          <div class="metric-value">
+            <span class="status-badge {% if report.is_standardized %}is-pass{% else %}is-fail{% endif %}">
+              {{ report.status }}
+            </span>
+          </div>
+          <div class="metric-note">모든 검사 항목 종합 결과</div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">입력 데이터</div>
+          <div class="metric-value">{{ report.row_count }}행</div>
+          <div class="metric-note">{{ report.column_count }}개 컬럼</div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">통과 검사</div>
+          <div class="metric-value">{{ report.pass_count }}개</div>
+          <div class="metric-note">총 6개 검사 항목</div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">발견 오류</div>
+          <div class="metric-value">{{ report.issue_count }}건</div>
+          <div class="metric-note">{{ report.file_format }} · {{ report.file_name }}</div>
+        </article>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">품질 검사 결과</h2>
+            <p class="section-description">스키마와 다섯 품질 차원을 독립적으로 판정했습니다.</p>
+          </div>
+          <span class="section-count">{{ report.pass_count }} PASS · {{ report.fail_count }} FAIL</span>
+        </div>
+        <div class="check-grid">
+          {% for check in report.checks %}
+            <article class="check-card">
+              <div class="check-top">
+                <h3 class="check-name">{{ check.label }}</h3>
+                <span class="status-badge {% if check.status == 'PASS' %}is-pass{% else %}is-fail{% endif %}">{{ check.status }}</span>
+              </div>
+              <p class="check-copy">{{ check.message }}</p>
+              <div class="issue-count">오류 {{ check.issue_count }}건</div>
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">오류 상세</h2>
+            <p class="section-description">수정할 행, 컬럼, 입력값과 판정 사유를 확인할 수 있습니다.</p>
+          </div>
+          <span class="section-count">{{ report.issue_count }} ISSUES</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>검사</th>
+                <th>데이터 행</th>
+                <th>컬럼</th>
+                <th>입력값</th>
+                <th>오류 이유</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for issue in report.issues %}
+                <tr>
+                  <td>{{ issue.check }}</td>
+                  <td>{{ issue.row_number }}</td>
+                  <td><span class="code-chip">{{ issue.column }}</span></td>
+                  <td>{{ issue.value|default:"(빈 값)" }}</td>
+                  <td>{{ issue.message }}</td>
+                </tr>
+              {% empty %}
+                <tr><td colspan="5" class="empty-state">발견된 오류가 없습니다. 표준화 계약을 모두 통과했습니다.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% if report.issues_truncated %}
+          <div class="source-note">화면 성능을 위해 오류 상세는 처음 100건만 표시합니다. 전체 오류 수는 {{ report.issue_count }}건입니다.</div>
+        {% endif %}
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">데이터 미리보기</h2>
+            <p class="section-description">업로드 데이터의 처음 10행만 표시합니다.</p>
+          </div>
+          <span class="section-count">{{ report.row_count }} TOTAL ROWS</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                {% for column in report.preview_columns %}
+                  <th>{{ column }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in report.preview_rows %}
+                <tr>
+                  {% for column, value in row.items %}
+                    <td>{{ value|default:"" }}</td>
+                  {% endfor %}
+                </tr>
+              {% empty %}
+                <tr><td class="empty-state">데이터 행이 없습니다.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    {% else %}
+      <section class="section">
+        <div class="source-note">
+          <strong>검사 기준:</strong>
+          member_id, as_of_date, order_count_30d, quantity_sum_30d,
+          spend_sum_30d, preferred_category_code_30d, last_order_days_ago
+        </div>
+      </section>
+    {% endif %}
+
+    <footer class="footer">Bookstore Data Standard · Day 7 File Quality Check</footer>
+  </main>
+
+  <script>
+    const input = document.getElementById("data-file");
+    const dropZone = document.getElementById("drop-zone");
+    const selectedFile = document.getElementById("selected-file");
+
+    function showFile() {
+      selectedFile.textContent = input.files.length
+        ? input.files[0].name
+        : "선택된 파일 없음";
+    }
+
+    input.addEventListener("change", showFile);
+    ["dragenter", "dragover"].forEach((eventName) => {
+      dropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        dropZone.classList.add("is-dragging");
+      });
+    });
+    ["dragleave", "drop"].forEach((eventName) => {
+      dropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        dropZone.classList.remove("is-dragging");
+      });
+    });
+    dropZone.addEventListener("drop", (event) => {
+      if (event.dataTransfer.files.length) {
+        input.files = event.dataTransfer.files;
+        showFile();
+      }
+    });
+  </script>
+</body>
+</html>

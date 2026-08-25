@@ -5,8 +5,8 @@ from bookstore.service.services import get_bookstore_Standard_enterty
 from bookstore.service.services import get_day5_orm_dashboard
 from bookstore.service.services import get_day5_raw_dashboard
 from bookstore.service.services import get_day6_feature_dashboard_context
-
-
+from bookstore.service.services import get_day7_quality_dashboard_context
+from bookstore.service.services import get_day7_inquality_dashboard_context
 
 def day2_dashboard(request):
     #bookstore 내부 데이터 표준화 사전 생성 완료 여부를 확인해 화면으로 노출하는 함수입니다.
@@ -49,5 +49,29 @@ def day6_dashboard(request):
     return render(
         request,
         "day6_dashboard.html",
+        context,
+    )
+
+def day7_dashboard(request):
+    context = get_day7_quality_dashboard_context()
+    return render(
+        request,
+        "day7_dashboard.html",
+        context,
+    )
+
+def day7_data_check_dashboard(request):
+    uploaded_file = None
+    if request.method == "POST":
+        uploaded_file = (
+            request.FILES.get("data_file")
+            or request.FILES.get("csv_file")
+        )
+    context = get_day7_inquality_dashboard_context(uploaded_file)
+    if request.method == "POST" and uploaded_file is None:
+        context["upload_error"] = "데이터 파일을 선택해 주세요."
+    return render(
+        request,
+        "day7_data_check_dashboard.html",
         context,
     )

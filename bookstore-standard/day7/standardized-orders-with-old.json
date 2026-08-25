@@ -1,0 +1,93 @@
+[
+  {
+    "member_id": "M0001",
+    "member_name": "김민수",
+    "book_id": "B001",
+    "book_name": "데이터 모델링 입문",
+    "category_code": "C01",
+    "category_name": "데이터",
+    "order_id": "O1001",
+    "order_datetime": "2026-08-10T09:15:00",
+    "order_status_code": "PAID",
+    "quantity": 2,
+    "unit_price": 18000.0
+  },
+  {
+    "member_id": "M0001",
+    "member_name": "김민수",
+    "book_id": "B002",
+    "book_name": "파이썬 첫걸음",
+    "category_code": "C02",
+    "category_name": "프로그래밍",
+    "order_id": "O1001",
+    "order_datetime": "2026-08-10T09:15:00",
+    "order_status_code": "PAID",
+    "quantity": 1,
+    "unit_price": 22000.0
+  },
+  {
+    "member_id": "M0002",
+    "member_name": "이서연",
+    "book_id": "B003",
+    "book_name": "Django 웹 개발",
+    "category_code": "C02",
+    "category_name": "프로그래밍",
+    "order_id": "O1002",
+    "order_datetime": "2026-08-10T10:20:00",
+    "order_status_code": "SHIPPING",
+    "quantity": 1,
+    "unit_price": 30000.0
+  },
+  {
+    "member_id": "M0003",
+    "member_name": "박준호",
+    "book_id": "B001",
+    "book_name": "데이터 모델링 입문",
+    "category_code": "C01",
+    "category_name": "데이터",
+    "order_id": "O1003",
+    "order_datetime": "2026-08-11T11:00:00",
+    "order_status_code": "DONE",
+    "quantity": 1,
+    "unit_price": 18000.0
+  },
+  {
+    "member_id": "M0001",
+    "member_name": "김민수",
+    "book_id": "B009",
+    "book_name": "데이터 품질",
+    "category_code": "C01",
+    "category_name": "데이터",
+    "order_id": "O1009",
+    "order_datetime": "2026-08-13T09:05:00",
+    "order_status_code": "DONE",
+    "quantity": 1,
+    "unit_price": 19000.0
+  },
+  {
+    "member_id": "M0010",
+    "member_name": "홍하린",
+    "book_id": "B011",
+    "book_name": "신경망",
+    "category_code": "C03",
+    "category_name": "AI",
+    "order_id": "O1011",
+    "order_datetime": "2026-08-13T11:00:00",
+    "order_status_code": "PAID",
+    "quantity": 1,
+    "unit_price": 28000.0
+  },
+  {
+    "member_id": "M0001",
+    "member_name": "김민수",
+    "book_id": "B001",
+    "book_name": "데이터 모델링 입문",
+    "category_code": "C01",
+    "category_name": "데이터",
+    "order_id": "O0900",
+    "order_datetime": "2026-06-01T09:00:00",
+    "order_status_code": "PAID",
+    "quantity": 1,
+    "unit_price": 18000.0
+  }
+]

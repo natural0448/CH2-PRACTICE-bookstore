@@ -10,5 +10,7 @@ urlpatterns = [
     path("day5/", views.day5_orm_dashboard, name="day5_dashboard"),
     path("day5/raw/", views.day5_raw_dashboard, name="day5_raw_dashboard"),
     path("day6/", views.day6_dashboard, name="day6_dashboard"),
+    path("day7/", views.day7_dashboard, name="day7_dashboard"),
+    path("day7/data_check/", views.day7_data_check_dashboard, name="day7_data_check_dashboard"),
 ]
 

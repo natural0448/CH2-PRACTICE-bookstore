@@ -1,0 +1,161 @@
+{
+  "catalog_file": "as-is-catalog.csv",
+  "overall_status": "FAIL",
+  "checked_column_count": 7,
+  "name_gap_column_count": 7,
+  "domain_gap_column_count": 3,
+  "unmapped_column_count": 0,
+  "results": [
+    {
+      "source_table_name": "ml_mbr_ftr",
+      "source_column_name": "mbr_no",
+      "standard_table_name": "member_book_preference_features",
+      "standard_column_name": "member_id",
+      "logical_name": "회원ID",
+      "word_ids": [
+        "MEMBER",
+        "ID"
+      ],
+      "translation_status": "MAPPED",
+      "gaps": [
+        "physical_name"
+      ],
+      "domain_differences": [],
+      "status": "GAP"
+    },
+    {
+      "source_table_name": "ml_mbr_ftr",
+      "source_column_name": "base_dt",
+      "standard_table_name": "member_book_preference_features",
+      "standard_column_name": "as_of_date",
+      "logical_name": "기준일자",
+      "word_ids": [
+        "AS_OF",
+        "DATE"
+      ],
+      "translation_status": "MAPPED",
+      "gaps": [
+        "physical_name",
+        "domain"
+      ],
+      "domain_differences": [
+        {
+          "field": "data_type",
+          "as_is_value": "VARCHAR",
+          "standard_value": "DATE"
+        },
+        {
+          "field": "max_length",
+          "as_is_value": "10",
+          "standard_value": ""
+        }
+      ],
+      "status": "GAP"
+    },
+    {
+      "source_table_name": "ml_mbr_ftr",
+      "source_column_name": "ord_cnt_30d",
+      "standard_table_name": "member_book_preference_features",
+      "standard_column_name": "order_count_30d",
+      "logical_name": "30일주문건수",
+      "word_ids": [
+        "WINDOW_30D",
+        "ORDER",
+        "COUNT"
+      ],
+      "translation_status": "MAPPED",
+      "gaps": [
+        "physical_name"
+      ],
+      "domain_differences": [],
+      "status": "GAP"
+    },
+    {
+      "source_table_name": "ml_mbr_ftr",
+      "source_column_name": "qty_sum_30d",
+      "standard_table_name": "member_book_preference_features",
+      "standard_column_name": "quantity_sum_30d",
+      "logical_name": "30일수량합계",
+      "word_ids": [
+        "WINDOW_30D",
+        "QUANTITY",
+        "SUM"
+      ],
+      "translation_status": "MAPPED",
+      "gaps": [
+        "physical_name"
+      ],
+      "domain_differences": [],
+      "status": "GAP"
+    },
+    {
+      "source_table_name": "ml_mbr_ftr",
+      "source_column_name": "spend_amt_30d",
+      "standard_table_name": "member_book_preference_features",
+      "standard_column_name": "spend_sum_30d",
+      "logical_name": "30일구매금액합계",
+      "word_ids": [
+        "WINDOW_30D",
+        "SPEND",
+        "SUM"
+      ],
+      "translation_status": "MAPPED",
+      "gaps": [
+        "physical_name",
+        "domain"
+      ],
+      "domain_differences": [
+        {
+          "field": "max_length",
+          "as_is_value": "10",
+          "standard_value": "12"
+        }
+      ],
+      "status": "GAP"
+    },
+    {
+      "source_table_name": "ml_mbr_ftr",
+      "source_column_name": "pref_ctg_cd_30d",
+      "standard_table_name": "member_book_preference_features",
+      "standard_column_name": "preferred_category_code_30d",
+      "logical_name": "30일선호카테고리코드",
+      "word_ids": [
+        "WINDOW_30D",
+        "PREFERRED",
+        "CATEGORY",
+        "CODE"
+      ],
+      "translation_status": "MAPPED",
+      "gaps": [
+        "physical_name",
+        "domain"
+      ],
+      "domain_differences": [
+        {
+          "field": "nullable",
+          "as_is_value": "N",
+          "standard_value": "Y"
+        }
+      ],
+      "status": "GAP"
+    },
+    {
+      "source_table_name": "ml_mbr_ftr",
+      "source_column_name": "last_ord_days",
+      "standard_table_name": "member_book_preference_features",
+      "standard_column_name": "last_order_days_ago",
+      "logical_name": "마지막주문경과일수",
+      "word_ids": [
+        "LAST",
+        "ORDER",
+        "DAYS_AGO"
+      ],
+      "translation_status": "MAPPED",
+      "gaps": [
+        "physical_name"
+      ],
+      "domain_differences": [],
+      "status": "GAP"
+    }
+  ]
+}

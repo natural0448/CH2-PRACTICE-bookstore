@@ -1,0 +1,8 @@
+table_name,column_name,data_type,max_length,nullable,description
+ml_mbr_ftr,mbr_no,VARCHAR,20,N,회원번호
+ml_mbr_ftr,base_dt,VARCHAR,10,N,특징계산기준일
+ml_mbr_ftr,ord_cnt_30d,INTEGER,,N,최근30일주문건수
+ml_mbr_ftr,qty_sum_30d,INTEGER,,N,최근30일구매수량합계
+ml_mbr_ftr,spend_amt_30d,DECIMAL,10,N,최근30일구매금액합계
+ml_mbr_ftr,pref_ctg_cd_30d,VARCHAR,20,N,최근30일선호분류코드
+ml_mbr_ftr,last_ord_days,INTEGER,,Y,마지막주문경과일수

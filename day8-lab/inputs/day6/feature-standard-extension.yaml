@@ -1,0 +1,133 @@
+version: 1
+extension_id: online_bookstore_feature_standard_v1
+status: approved
+approved_date: '2026-08-12'
+owner: data_governance
+base_standard:
+  words_file: bookstore-standard/day2/standard-words.csv
+  terms_file: bookstore-standard/day2/standard-terms.csv
+  domains_file: bookstore-standard/day2/data-domains.yaml
+words:
+  - word_id: AS_OF
+    logical_word: 기준
+    physical_token: as_of
+    definition: feature 값을 계산한 시점
+  - word_id: DATE
+    logical_word: 일자
+    physical_token: date
+    definition: 시각을 제외한 달력 날짜
+  - word_id: WINDOW_30D
+    logical_word: 30일
+    physical_token: 30d
+    definition: 기준일 직전 30일 집계 구간
+  - word_id: COUNT
+    logical_word: 건수
+    physical_token: count
+    definition: 조건에 해당하는 업무 사건의 개수
+  - word_id: SUM
+    logical_word: 합계
+    physical_token: sum
+    definition: 여러 수치 값을 더한 결과
+  - word_id: SPEND
+    logical_word: 구매금액
+    physical_token: spend
+    definition: 수량과 단가를 곱하여 더한 구매 금액
+  - word_id: PREFERRED
+    logical_word: 선호
+    physical_token: preferred
+    definition: 정해진 기준에서 가장 많이 선택한 항목
+  - word_id: LAST
+    logical_word: 마지막
+    physical_token: last
+    definition: 기준일 이전 가장 최근 사건
+  - word_id: DAYS_AGO
+    logical_word: 경과일수
+    physical_token: days_ago
+    definition: 기준일부터 과거 날짜까지 지난 날짜 수
+domains:
+  - domain_id: DATE_ISO
+    description: YYYY-MM-DD 형식의 필수 일자
+    logical_type: date
+    python_type: date
+    database_type: DATE
+    nullable: false
+    format: '%Y-%m-%d'
+    minimum: null
+    maximum: null
+  - domain_id: NON_NEGATIVE_INTEGER
+    description: 0 이상의 필수 정수
+    logical_type: count
+    python_type: int
+    database_type: INTEGER
+    nullable: false
+    format: null
+    minimum: 0
+    maximum: null
+  - domain_id: OPTIONAL_NON_NEGATIVE_INTEGER
+    description: 값이 있으면 0 이상인 선택 정수
+    logical_type: count
+    python_type: int
+    database_type: INTEGER
+    nullable: true
+    format: null
+    minimum: 0
+    maximum: null
+  - domain_id: OPTIONAL_CODE_20
+    description: 값이 있으면 CODE_20 형식을 따르는 선택 코드
+    logical_type: code
+    python_type: str
+    database_type: VARCHAR
+    length: 20
+    nullable: true
+    format: '^[A-Z][A-Z0-9_\-]{0,19}$'
+    minimum: null
+    maximum: null
+term_bindings:
+  - physical_name: as_of_date
+    logical_name: 기준일자
+    word_ids:
+      - AS_OF
+      - DATE
+    domain_id: DATE_ISO
+    nullable: false
+  - physical_name: order_count_30d
+    logical_name: 30일주문건수
+    word_ids:
+      - WINDOW_30D
+      - ORDER
+      - COUNT
+    domain_id: NON_NEGATIVE_INTEGER
+    nullable: false
+  - physical_name: quantity_sum_30d
+    logical_name: 30일수량합계
+    word_ids:
+      - WINDOW_30D
+      - QUANTITY
+      - SUM
+    domain_id: NON_NEGATIVE_INTEGER
+    nullable: false
+  - physical_name: spend_sum_30d
+    logical_name: 30일구매금액합계
+    word_ids:
+      - WINDOW_30D
+      - SPEND
+      - SUM
+    domain_id: MONEY_12_2
+    nullable: false
+  - physical_name: preferred_category_code_30d
+    logical_name: 30일선호카테고리코드
+    word_ids:
+      - WINDOW_30D
+      - PREFERRED
+      - CATEGORY
+      - CODE
+    domain_id: OPTIONAL_CODE_20
+    nullable: true
+  - physical_name: last_order_days_ago
+    logical_name: 마지막주문경과일수
+    word_ids:
+      - LAST
+      - ORDER
+      - DAYS_AGO
+    domain_id: OPTIONAL_NON_NEGATIVE_INTEGER
+    nullable: true

@@ -1,0 +1,54 @@
+{
+  "dataset": "member_book_preference_features",
+  "source_file": "feature-sample.csv",
+  "row_count": 4,
+  "column_count": 7,
+  "overall_status": "PASS",
+  "summary": {
+    "dimension_count": 5,
+    "pass_count": 5,
+    "fail_count": 0
+  },
+  "dimensions": {
+    "completeness": {
+      "status": "PASS",
+      "expected_row_count": 4,
+      "actual_row_count": 4,
+      "required_cell_count": 20,
+      "missing_required_count": 0,
+      "conditional_nullable_violation_count": 0
+    },
+    "uniqueness": {
+      "status": "PASS",
+      "key_columns": [
+        "member_id",
+        "as_of_date"
+      ],
+      "checked_key_count": 4,
+      "duplicate_key_count": 0
+    },
+    "validity": {
+      "status": "PASS",
+      "checked_numeric_cell_count": 15,
+      "non_negative_violation_count": 0,
+      "zero_order_consistency_violation_count": 0
+    },
+    "referential_integrity": {
+      "status": "PASS",
+      "reference_member_count": 4,
+      "reference_category_count": 3,
+      "unknown_member_ids": [],
+      "unknown_category_codes": []
+    },
+    "point_in_time": {
+      "status": "PASS",
+      "expected_as_of_date": "2026-08-12",
+      "unexpected_as_of_dates": [],
+      "historical_source_order_count": 3,
+      "future_source_order_count": 2,
+      "order_count_mismatch_member_ids": [],
+      "future_leak_member_ids": [],
+      "negative_last_order_days_count": 0
+    }
+  }
+}

@@ -1,0 +1,6 @@
+entity_id,logical_name,classification,evidence_columns,grain,independent_reason,ai_role,status
+member,회원,기준,"member_id|member_name",회원 한 명,여러 주문에서 같은 회원을 참조한다,추천 대상,accepted
+book,도서,기준,"book_id|book_name|category_code",도서 한 종,여러 주문에서 같은 도서를 참조한다,추천 후보,accepted
+category,카테고리,기준,"category_code|category_name",카테고리 한 건,여러 도서가 같은 분류명을 공유한다,선호 설명,accepted
+order,주문,사건,"order_id|member_id|order_datetime|order_status_code",주문 한 건,회원의 주문 사건과 상태를 관리한다,행동 묶음,accepted
+order-item,주문항목,연결사건,"order_id|book_id|quantity|unit_price",주문에 포함된 도서 한 종,주문과 도서를 연결하며 수량과 당시 가격을 가진다,학습 행동 사실,accepted

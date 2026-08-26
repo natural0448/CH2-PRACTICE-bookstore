@@ -1,0 +1,49 @@
+{
+  "day": 7,
+  "status": "PASS",
+  "checks": {
+    "all_input_contracts_ready": true,
+    "as_is_gap_detected": true,
+    "all_catalog_columns_mapped": true,
+    "feature_catalog_has_exact_7_columns": true,
+    "quality_status_pass": true,
+    "all_quality_dimensions_pass": true,
+    "pre_validation_artifacts_exist": true
+  },
+  "failed_checks": [],
+  "evidence": {
+    "as_is_checked_column_count": 7,
+    "as_is_name_gap_column_count": 7,
+    "as_is_domain_gap_column_count": 3,
+    "standardized_catalog_column_count": 7,
+    "feature_row_count": 4,
+    "quality_status": "PASS",
+    "quality_dimension_statuses": {
+      "completeness": "PASS",
+      "uniqueness": "PASS",
+      "validity": "PASS",
+      "referential_integrity": "PASS",
+      "point_in_time": "PASS"
+    }
+  },
+  "artifacts": [
+    "as-is-catalog.csv",
+    "quality-rules.yaml",
+    "catalog-gap-report.json",
+    "standardized-catalog.csv",
+    "quality-report.json",
+    "day7-validation.json"
+  ],
+  "next_day": {
+    "required_catalog_columns": [
+      "member_id",
+      "as_of_date",
+      "order_count_30d",
+      "quantity_sum_30d",
+      "spend_sum_30d",
+      "preferred_category_code_30d",
+      "last_order_days_ago"
+    ],
+    "required_quality_status": "PASS"
+  }
+}

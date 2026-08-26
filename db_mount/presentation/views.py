@@ -31,8 +31,14 @@ def orm_item_form(request):
 
 
 def orm_items(request):
-    return JsonResponse({"items": get_orm_items()})
+    return JsonResponse(
+        {"items": get_orm_items()},
+        json_dumps_params={"ensure_ascii": False, "indent": 2},
+    )
 
 
 def raw_items(request):
-    return JsonResponse({"items": get_raw_items()})
+    return JsonResponse(
+        {"items": get_raw_items()},
+        json_dumps_params={"ensure_ascii": False, "indent": 2},
+    )

@@ -3,7 +3,6 @@ from django.db import migrations
 
 def seed_orm_items(apps, schema_editor):
     OrmItem = apps.get_model("db_mount", "OrmItem")
-    database_alias = schema_editor.connection.alias
 
     OrmItem.objects.using("sqlite3").bulk_create(
         [
@@ -15,7 +14,6 @@ def seed_orm_items(apps, schema_editor):
 
 def remove_orm_items(apps, schema_editor):
     OrmItem = apps.get_model("db_mount", "OrmItem")
-    database_alias = schema_editor.connection.alias
 
     OrmItem.objects.using("sqlite3").filter(id__in=[1, 2]).delete()
 

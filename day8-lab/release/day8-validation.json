@@ -1,0 +1,77 @@
+{
+  "checks": [
+    {
+      "evidence": 40,
+      "name": "upstream_exact_artifacts_present",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "book": 5,
+        "book_order": 5,
+        "category": 3,
+        "member": 4,
+        "order_amount": "153000.00",
+        "order_item": 6,
+        "source_rows": 6
+      },
+      "name": "day5_normalization_report_exact",
+      "status": "PASS"
+    },
+    {
+      "evidence": "approved",
+      "name": "feature_standard_extension_approved",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "binding_count": 6,
+        "domain_count": 4,
+        "word_count": 9
+      },
+      "name": "feature_standard_extension_exact_structure",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "catalog_metadata_match": true,
+        "column_count": 9,
+        "last_order_domain": "OPTIONAL_NON_NEGATIVE_INTEGER",
+        "preferred_category_domain": "OPTIONAL_CODE_20"
+      },
+      "name": "to_be_schema_metadata_matches_output",
+      "status": "PASS"
+    },
+    {
+      "evidence": 2,
+      "name": "ai_ready_row_count",
+      "status": "PASS"
+    },
+    {
+      "evidence": 2,
+      "name": "eligibility_exclusion_count",
+      "status": "PASS"
+    },
+    {
+      "evidence": 0,
+      "name": "source_quality_failure_count",
+      "status": "PASS"
+    },
+    {
+      "evidence": "9098fe74965a673ef912b4866416707b3d00b45956264c9c67c203a23bbd7b89",
+      "name": "dataset_checksum_recorded",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "lineage.json",
+        "catalog-final.csv"
+      ],
+      "name": "lineage_and_catalog_written",
+      "status": "PASS"
+    }
+  ],
+  "day": 8,
+  "release_status": "PASS_WITH_QUARANTINE",
+  "status": "READY_FOR_DJANGO"
+}

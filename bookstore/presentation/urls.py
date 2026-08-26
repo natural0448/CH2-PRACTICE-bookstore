@@ -12,5 +12,7 @@ urlpatterns = [
     path("day6/", views.day6_dashboard, name="day6_dashboard"),
     path("day7/", views.day7_dashboard, name="day7_dashboard"),
     path("day7/data_check/", views.day7_data_check_dashboard, name="day7_data_check_dashboard"),
+    path("day8/", views.day8_dashboard, name="day8_dashboard"),
+
 ]
 

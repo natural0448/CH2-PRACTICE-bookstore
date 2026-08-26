@@ -1,0 +1,41 @@
+{
+  "ai_ready_row_count": 2,
+  "eligibility_exclusion_count": 2,
+  "failed_row_count": 2,
+  "input_candidate_count": 4,
+  "label_coverage_rate": 0.5,
+  "overall_status": "PASS_WITH_QUARANTINE",
+  "rules": [
+    {
+      "failed_count": 0,
+      "rule": "UPSTREAM_VALIDATIONS_READY_OR_PASS",
+      "status": "PASS"
+    },
+    {
+      "failed_count": 0,
+      "rule": "FEATURE_REQUIRED_FIELDS_AND_DOMAINS",
+      "status": "PASS"
+    },
+    {
+      "failed_count": 0,
+      "rule": "POINT_IN_TIME_TEMPORAL_RULE",
+      "status": "PASS"
+    },
+    {
+      "failed_count": 0,
+      "rule": "DATASET_RECORD_ID_UNIQUE",
+      "status": "PASS"
+    },
+    {
+      "excluded_count": 2,
+      "rule": "NEXT_7D_LABEL_ELIGIBILITY",
+      "status": "PASS_WITH_EXCLUSIONS"
+    },
+    {
+      "failed_count": 0,
+      "rule": "TRAINING_OUTPUT_LABEL_COMPLETE",
+      "status": "PASS"
+    }
+  ],
+  "source_quality_failure_count": 0
+}

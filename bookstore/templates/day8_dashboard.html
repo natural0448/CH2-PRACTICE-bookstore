@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>Day 8 AI Ready Release</title>
+</head>
+<body>
+  <h1>Day 8 AI Ready Release</h1>
+  <ul>
+    <li>dataset: {{ manifest.dataset_name }}</li>
+    <li>version: {{ manifest.dataset_version }}</li>
+    <li>학습 행: {{ counts.ai_ready_row_count }}</li>
+    <li>제외 행: {{ counts.eligibility_exclusion_count }}</li>
+    <li>원천 품질 실패: {{ counts.source_quality_failure_count }}</li>
+    <li>release 상태: {{ manifest.release_status }}</li>
+    <li>validation 상태: {{ validation.status }}</li>
+    <li>checksum 일치: {{ checksum_match }}</li>
+    <li>최종 상태: {% if dashboard_pass %}PASS{% else %}FAIL{% endif %}</li>
+  </ul>
+
+  <h2>training checksum</h2>
+  <p>manifest: {{ expected_checksum }}</p>
+  <p>actual: {{ actual_checksum }}</p>
+
+  <h2>품질 규칙</h2>
+  <table border="1">
+    <thead>
+      <tr><th>규칙</th><th>상태</th></tr>
+    </thead>
+    <tbody>
+      {% for rule in quality_report.rules %}
+      <tr>
+        <td>{{ rule.rule }}</td>
+        <td>{{ rule.status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

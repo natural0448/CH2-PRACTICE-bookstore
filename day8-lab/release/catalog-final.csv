@@ -1,0 +1,10 @@
+dataset_name,column_order,physical_column_name,korean_term_name,domain_id,data_type,nullable,role,source
+member_book_preference_training,1,dataset_record_id,데이터셋레코드ID,DATASET_RECORD_ID_40,VARCHAR(40),N,identifier,member_id + as_of_date
+member_book_preference_training,2,member_id,회원ID,ID_20,VARCHAR(20),N,entity_key,day6.feature-sample.csv
+member_book_preference_training,3,as_of_date,기준일자,DATE_ISO,DATE,N,point_in_time,day6.feature-sample.csv
+member_book_preference_training,4,order_count_30d,30일주문건수,NON_NEGATIVE_INTEGER,INTEGER,N,feature,day6.feature-sample.csv
+member_book_preference_training,5,quantity_sum_30d,30일수량합계,NON_NEGATIVE_INTEGER,INTEGER,N,feature,day6.feature-sample.csv
+member_book_preference_training,6,spend_sum_30d,30일구매금액합계,MONEY_12_2,"DECIMAL(12,2)",N,feature,day6.feature-sample.csv
+member_book_preference_training,7,preferred_category_code_30d,30일선호카테고리코드,OPTIONAL_CODE_20,VARCHAR(20),Y,feature,day6.feature-sample.csv
+member_book_preference_training,8,last_order_days_ago,마지막주문경과일수,OPTIONAL_NON_NEGATIVE_INTEGER,INTEGER,Y,feature,day6.feature-sample.csv
+member_book_preference_training,9,label_next_7d_category_code,다음7일구매카테고리코드,CODE_20,VARCHAR(20),N,label,day3.standardized-orders.csv

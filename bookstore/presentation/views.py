@@ -7,6 +7,7 @@ from bookstore.service.services import get_day5_raw_dashboard
 from bookstore.service.services import get_day6_feature_dashboard_context
 from bookstore.service.services import get_day7_quality_dashboard_context
 from bookstore.service.services import get_day7_inquality_dashboard_context
+from bookstore.service.services import get_day8_release_dashboard_context
 
 def day2_dashboard(request):
     #bookstore 내부 데이터 표준화 사전 생성 완료 여부를 확인해 화면으로 노출하는 함수입니다.
@@ -75,3 +76,8 @@ def day7_data_check_dashboard(request):
         "day7_data_check_dashboard.html",
         context,
     )
+
+
+def day8_dashboard(request):
+    context = get_day8_release_dashboard_context()
+    return render(request,"day8_dashboard.html",context,)

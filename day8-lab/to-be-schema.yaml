@@ -1,0 +1,100 @@
+version: 1
+dataset:
+  name: member_book_preference_training
+  korean_name: 회원별 도서 선호 추천 학습 데이터
+  purpose: 회원별 다음 구매 카테고리 추천
+  grain: one_member_one_as_of_date
+  entity_key:
+    - member_id
+    - as_of_date
+  feature_window:
+    start: as_of_date_minus_30_days
+    end_exclusive: as_of_date
+  label_window:
+    start_inclusive: as_of_date
+    end_exclusive: as_of_date_plus_7_days
+  label_tie_breaker: category_code_ascending
+  allowed_order_status_codes:
+    - PAID
+    - SHIPPING
+    - DONE
+  local_domains:
+    - domain_id: DATASET_RECORD_ID_40
+      description: member_id와 as_of_date로 만든 40자 이내 학습 레코드 ID
+      type: string
+      max_length: 40
+      nullable: false
+  columns:
+    - name: dataset_record_id
+      korean_name: 데이터셋레코드ID
+      role: identifier
+      domain: DATASET_RECORD_ID_40
+      type: string
+      max_length: 40
+      nullable: false
+    - name: member_id
+      korean_name: 회원ID
+      role: entity_key
+      domain: ID_20
+      type: string
+      nullable: false
+    - name: as_of_date
+      korean_name: 기준일자
+      role: point_in_time
+      domain: DATE_ISO
+      type: date
+      format: YYYY-MM-DD
+      nullable: false
+    - name: order_count_30d
+      korean_name: 30일주문건수
+      role: feature
+      domain: NON_NEGATIVE_INTEGER
+      type: integer
+      minimum: 0
+      nullable: false
+    - name: quantity_sum_30d
+      korean_name: 30일수량합계
+      role: feature
+      domain: NON_NEGATIVE_INTEGER
+      type: integer
+      minimum: 0
+      nullable: false
+    - name: spend_sum_30d
+      korean_name: 30일구매금액합계
+      role: feature
+      domain: MONEY_12_2
+      type: decimal
+      minimum: 0
+      nullable: false
+    - name: preferred_category_code_30d
+      korean_name: 30일선호카테고리코드
+      role: feature
+      domain: OPTIONAL_CODE_20
+      type: string
+      nullable: true
+    - name: last_order_days_ago
+      korean_name: 마지막주문경과일수
+      role: feature
+      domain: OPTIONAL_NON_NEGATIVE_INTEGER
+      type: integer
+      minimum: 0
+      nullable: true
+    - name: label_next_7d_category_code
+      korean_name: 다음7일구매카테고리코드
+      role: label
+      domain: CODE_20
+      type: string
+      nullable: false
+quality_gate:
+  unique:
+    - dataset_record_id
+    - member_id_and_as_of_date
+  allowed_category_codes:
+    - C01
+    - C02
+    - C03
+  source_quality_failure_count: 0
+release:
+  allowed_status:
+    - PASS
+    - PASS_WITH_QUARANTINE

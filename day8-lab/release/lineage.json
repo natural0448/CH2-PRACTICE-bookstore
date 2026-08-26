@@ -1,0 +1,62 @@
+{
+  "dataset_version": "2026-08-14-v1",
+  "outputs": [
+    {
+      "file": "ai-ready-dataset.csv",
+      "role": "AI_TRAINING_INPUT"
+    },
+    {
+      "file": "failed-rows.csv",
+      "role": "AUDIT_AND_REVIEW_INPUT"
+    }
+  ],
+  "sources": [
+    {
+      "file": "day2/standard-terms.csv",
+      "use": "base_standard_names"
+    },
+    {
+      "file": "day3/standardized-orders.csv",
+      "use": "next_7d_label_events"
+    },
+    {
+      "file": "day6/feature-sample.csv",
+      "use": "point_in_time_features"
+    },
+    {
+      "file": "day6/feature-standard-extension.yaml",
+      "use": "approved_feature_words_and_domains"
+    },
+    {
+      "file": "day7/standardized-catalog.csv",
+      "use": "feature_catalog_mapping"
+    },
+    {
+      "file": "day7/quality-report.json",
+      "use": "upstream_quality_gate"
+    }
+  ],
+  "transformations": [
+    {
+      "name": "check_upstream_contract",
+      "step": 1
+    },
+    {
+      "name": "validate_feature_domains",
+      "step": 2
+    },
+    {
+      "name": "build_next_7d_category_label",
+      "step": 3,
+      "time_rule": "as_of_date_lte_order_datetime_lt_as_of_date_plus_7_days"
+    },
+    {
+      "name": "split_training_and_audit_rows",
+      "step": 4
+    },
+    {
+      "name": "package_release",
+      "step": 5
+    }
+  ]
+}

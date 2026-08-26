@@ -1,0 +1,35 @@
+{
+  "counts": {
+    "ai_ready_row_count": 2,
+    "eligibility_exclusion_count": 2,
+    "failed_row_count": 2,
+    "input_candidate_count": 4,
+    "source_quality_failure_count": 0
+  },
+  "dataset_name": "member_book_preference_training",
+  "dataset_version": "2026-08-14-v1",
+  "files": {
+    "audit": {
+      "path": "failed-rows.csv",
+      "row_count": 2,
+      "sha256": "02f361a56e00240f8ca9b1a5d2fc313bfbbdb77f5ddbd93523c2f4db75a86335"
+    },
+    "catalog": "catalog-final.csv",
+    "dataset_card": "dataset-card.md",
+    "lineage": "lineage.json",
+    "quality_report": "quality-report.json",
+    "training": {
+      "path": "ai-ready-dataset.csv",
+      "row_count": 2,
+      "sha256": "9098fe74965a673ef912b4866416707b3d00b45956264c9c67c203a23bbd7b89"
+    }
+  },
+  "generated_at": "2026-08-14T18:00:00+09:00",
+  "input_checksums": {
+    "day3_standardized_orders_sha256": "db079631978582ac1dafa6c5b50742970a47039e420f0caac6c3b58bf0c7c3fe",
+    "day6_feature_sample_sha256": "f0edb22a5f7422c792eac960669cc635951111caaf35e7851308371d77270c60",
+    "day6_feature_standard_extension_sha256": "75a6861f1688369cfb334f18cbed02b16958e82ab858d01c7983e5121e4f5490"
+  },
+  "release_status": "PASS_WITH_QUARANTINE",
+  "schema_file": "to-be-schema.yaml"
+}

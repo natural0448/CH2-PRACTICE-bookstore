@@ -8,6 +8,7 @@ from decimal import Decimal, InvalidOperation
 from django.db.models import DecimalField, ExpressionWrapper, F
 from bookstore.repository.models import OrderItem
 from django.db import connection
+import hashlib
 
 
 import yaml
@@ -823,4 +824,59 @@ def _expected_day7_order_counts(as_of_date):
     return {
         member_id: Decimal(len(ids))
         for member_id, ids in order_ids.items()
+    }
+
+
+def get_day8_release_dashboard_context():
+    """Day 8 release의 수치와 checksum을 화면 context로 만든다."""
+    release_dir = (
+        Path(settings.BASE_DIR)
+        / "day8-lab"
+        / "release"
+    )
+
+    with (release_dir / "dataset-manifest.json").open(
+        encoding="utf-8",
+    ) as file:
+        manifest = json.load(file)
+
+    with (release_dir / "quality-report.json").open(
+        encoding="utf-8",
+    ) as file:
+        quality_report = json.load(file)
+
+    with (release_dir / "day8-validation.json").open(
+        encoding="utf-8",
+    ) as file:
+        validation = json.load(file)
+
+    training_info = manifest["files"]["training"]
+    training_path = release_dir / training_info["path"]
+    actual_checksum = hashlib.sha256(
+        training_path.read_bytes()
+    ).hexdigest()
+    checksum_match = actual_checksum == training_info["sha256"]
+
+    counts = manifest["counts"]
+    dashboard_pass = (
+        manifest.get("dataset_version") == "2026-08-14-v1"
+        and counts.get("ai_ready_row_count") == 2
+        and counts.get("eligibility_exclusion_count") == 2
+        and counts.get("source_quality_failure_count") == 0
+        and manifest.get("release_status") == "PASS_WITH_QUARANTINE"
+        and quality_report.get("overall_status")
+        == "PASS_WITH_QUARANTINE"
+        and validation.get("status") == "READY_FOR_DJANGO"
+        and checksum_match
+    )
+
+    return {
+        "manifest": manifest,
+        "counts": counts,
+        "quality_report": quality_report,
+        "validation": validation,
+        "expected_checksum": training_info["sha256"],
+        "actual_checksum": actual_checksum,
+        "checksum_match": checksum_match,
+        "dashboard_pass": dashboard_pass,
     }

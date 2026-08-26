@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SQLite 데이터 적재</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: #0f172a;
+      background: #f1f5f9;
+      font-family: Pretendard, "Noto Sans KR", Arial, sans-serif;
+    }
+    .card {
+      width: min(560px, 100%);
+      padding: 34px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, .1);
+    }
+    .eyebrow { margin: 0 0 8px; color: #2563eb; font-size: 13px; font-weight: 900; }
+    h1 { margin: 0; font-size: 30px; letter-spacing: -.04em; }
+    .description { margin: 10px 0 26px; color: #64748b; }
+    label { display: block; margin-bottom: 8px; font-weight: 900; }
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font: inherit;
+    }
+    input:focus { outline: 3px solid #dbeafe; border-color: #2563eb; }
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 13px 18px;
+      color: #fff;
+      background: #2563eb;
+      border: 0;
+      border-radius: 10px;
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    button:hover { background: #1d4ed8; }
+    .raw-button { background: #0f766e; }
+    .raw-button:hover { background: #115e59; }
+    .message { margin: 18px 0 0; padding: 13px 15px; border-radius: 10px; font-weight: 800; }
+    .success { color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; }
+    .error { color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; }
+    .links { display: flex; gap: 9px; margin-top: 24px; }
+    .links a { color: #475569; font-size: 13px; font-weight: 800; text-decoration: none; }
+    .links a:hover { color: #2563eb; }
+    @media (max-width: 480px) {
+      .actions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <p class="eyebrow">DB MOUNT · SQLITE3</p>
+    <h1>SQLite 데이터 적재</h1>
+    <p class="description">같은 name을 ORM 또는 Raw SQL 방식으로 각각 적재할 수 있습니다.</p>
+
+    <form method="post" action="{% url 'db_mount:orm_item_form' %}">
+      {% csrf_token %}
+      <label for="name">Name</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        value="{{ name }}"
+        maxlength="50"
+        placeholder="적재할 이름을 입력하세요"
+        autocomplete="off"
+        required
+      >
+      <div class="actions">
+        <button type="submit" name="save_mode" value="orm">ORM 적재</button>
+        <button class="raw-button" type="submit" name="save_mode" value="raw">Raw SQL 적재</button>
+      </div>
+    </form>
+
+    {% if created_item %}
+      <div class="message success" role="status">
+        {{ created_item.mode }} 저장 완료: ID {{ created_item.id }} · {{ created_item.name }}
+      </div>
+    {% endif %}
+    {% if form_error %}
+      <div class="message error" role="alert">{{ form_error }}</div>
+    {% endif %}
+
+    <nav class="links" aria-label="조회 화면 이동">
+      <a href="{% url 'db_mount:orm_items' %}">ORM 결과 확인</a>
+      <a href="{% url 'db_mount:raw_items' %}">Raw 결과 확인</a>
+    </nav>
+  </main>
+</body>
+</html>
